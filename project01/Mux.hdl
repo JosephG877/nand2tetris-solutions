@@ -1,0 +1,29 @@
+CHIP Mux {
+    IN a, b, sel;
+    OUT out;
+
+    PARTS:
+    //Canon boolean expression:
+    //X=(a.~sel)+(b.sel)
+    //Not(in=sel, out=notsel);
+    //And(a=a, b=notsel, out=firstand);
+    //And(a=b, b=sel, out=secand);
+    //Or(a=firstand, b=secand, out=out);
+    
+    //Nand-only expression(s)...:
+    //[Not:same variable to a,b seems to deny it]
+    Nand(a=sel, b=sel, out=notsel);
+    //[And1:pipe output of normal nand to other nand]
+    Nand(a=a, b=notsel, out=fand);
+    Nand(a=fand, b=fand, out=and1);
+    //[And2: same process as before]
+    Nand(a=b, b=sel, out=sand);
+    Nand(a=sand, b=sand, out=and2);
+    //[Or:De Morgan Rule]
+    //[Deny a,b variables, nand them!]
+    Nand(a=and1, b=and1, out=nand1);
+    Nand(a=and2, b=and2, out=nand2);
+    Nand(a=nand1, b=nand2, out=out);
+
+    
+}

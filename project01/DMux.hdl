@@ -1,0 +1,22 @@
+CHIP DMux {
+    IN in, sel;
+    OUT a, b;
+
+    PARTS:
+    //Canon boolean expression for DMUX:
+    //X1=in.~sel    -> a=in.~sel
+    //X2=in.sel     -> b=in.sel
+    //[DMUX in HDL - canon form]
+    //Not(in=sel, out=notsel);
+    //And(a=in, b=notsel, out=a);
+    //And(a=in, b=sel, out=b);
+    //[DMUX in HDL - nand form]
+    //NOT
+    Nand(a=sel, b=sel, out=notsel);
+    //AND -> X1 a
+    Nand(a=in, b=notsel, out=and1);
+    Nand(a=and1, b=and1, out=a);
+    //AND -> X2 b
+    Nand(a=in, b=sel, out=and2);
+    Nand(a=and2, b=and2, out=b);
+}

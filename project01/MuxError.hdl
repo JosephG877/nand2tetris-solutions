@@ -1,0 +1,26 @@
+CHIP Mux {
+    IN a, b, sel;
+    OUT out;
+
+    PARTS:
+//X=(((A|S) | (A|S)) | (B|(S|S)) | (B|(S|S)))
+
+    //Dois A|S iniciais
+    Nand(a=a, b=sel, out=sel1);
+    Nand(a=a, b=sel, out=sel2);
+    //NAND entre dois A|S iniciais
+    Nand(a=sel1, b=sel2, out=aesini);
+
+    //Dois B|(S|S)
+    Nand(a=sel, b=sel, out=ss1);
+    Nand(a=b, b=ss1, out=bss1);
+
+    Nand(a=sel, b=sel, out=ss2);
+    Nand(a=b, b=ss2, out=bss2);
+    
+    //NAND entre dois B|(S|S)
+    Nand(a=bss1, b=bss2, out=bssini);
+    //NAND final
+    Nand(a=aesini, b=bssini, out=out);
+    
+}

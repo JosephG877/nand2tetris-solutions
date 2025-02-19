@@ -1,0 +1,220 @@
+CHIP Mux16 {
+    IN a[16], b[16], sel;
+    OUT out[16];
+
+    PARTS:
+    //X=(a.~sel)+(b.sel)
+    //Canon Solution first bit
+    //Not(in=sel, out=nsel);
+    //And(a=a[0],b=nsel, out=andA0);
+    //And(a=b[0],b=sel, out=andB0);
+    //Or(a=andA0, b=andB0, out=out[0]);
+    //Nand Solution first bit
+    //Not
+    Nand(a=sel, b=sel, out=nsel0);
+    //Ands
+    Nand(a=a[0], b=nsel0, out=fandA0);
+    Nand(a=fandA0, b=fandA0, out=andA0);
+    Nand(a=b[0], b=sel, out=fandB0);
+    Nand(a=fandB0, b=fandB0, out=andB0);
+    //Or(Deny and nand)
+    Nand(a=andA0,b=andA0,out=orA0);
+    Nand(a=andB0,b=andB0,out=orB0);
+    Nand(a=orA0,b=orB0,out=out[0]);
+
+    //Nand Solution second bit
+    //Not
+    Nand(a=sel, b=sel, out=nsel1);
+    //Ands
+    Nand(a=a[1], b=nsel1, out=fandA1);
+    Nand(a=fandA1, b=fandA1, out=andA1);
+    Nand(a=b[1], b=sel, out=fandB1);
+    Nand(a=fandB1, b=fandB1, out=andB1);
+    //Or(Deny and nand)
+    Nand(a=andA1,b=andA1,out=orA1);
+    Nand(a=andB1,b=andB1,out=orB1);
+    Nand(a=orA1,b=orB1,out=out[1]);
+
+    //Nand Solution third bit
+    //Not
+    Nand(a=sel, b=sel, out=nsel2);
+    //Ands
+    Nand(a=a[2], b=nsel2, out=fandA2);
+    Nand(a=fandA2, b=fandA2, out=andA2);
+    Nand(a=b[2], b=sel, out=fandB2);
+    Nand(a=fandB2, b=fandB2, out=andB2);
+    //Or(Deny and nand)
+    Nand(a=andA2,b=andA2,out=orA2);
+    Nand(a=andB2,b=andB2,out=orB2);
+    Nand(a=orA2,b=orB2,out=out[2]);
+
+    //Nand Solution 4th bit
+    //Not
+    Nand(a=sel, b=sel, out=nsel3);
+    //Ands
+    Nand(a=a[3], b=nsel3, out=fandA3);
+    Nand(a=fandA3, b=fandA3, out=andA3);
+    Nand(a=b[3], b=sel, out=fandB3);
+    Nand(a=fandB3, b=fandB3, out=andB3);
+    //Or(Deny and nand)
+    Nand(a=andA3,b=andA3,out=orA3);
+    Nand(a=andB3,b=andB3,out=orB3);
+    Nand(a=orA3,b=orB3,out=out[3]);
+
+    //Nand Solution 5th bit
+    //Not
+    Nand(a=sel, b=sel, out=nsel4);
+    //Ands
+    Nand(a=a[4], b=nsel4, out=fandA4);
+    Nand(a=fandA4, b=fandA4, out=andA4);
+    Nand(a=b[4], b=sel, out=fandB4);
+    Nand(a=fandB4, b=fandB4, out=andB4);
+    //Or(Deny and nand)
+    Nand(a=andA4,b=andA4,out=orA4);
+    Nand(a=andB4,b=andB4,out=orB4);
+    Nand(a=orA4,b=orB4,out=out[4]);
+
+    //Nand Solution 6th bit
+    //Not
+    Nand(a=sel, b=sel, out=nsel5);
+    //Ands
+    Nand(a=a[5], b=nsel5, out=fandA5);
+    Nand(a=fandA5, b=fandA5, out=andA5);
+    Nand(a=b[5], b=sel, out=fandB5);
+    Nand(a=fandB5, b=fandB5, out=andB5);
+    //Or(Deny and nand)
+    Nand(a=andA5,b=andA5,out=orA5);
+    Nand(a=andB5,b=andB5,out=orB5);
+    Nand(a=orA5,b=orB5,out=out[5]);
+
+    //Nand Solution 7th bit
+    //Not
+    Nand(a=sel, b=sel, out=nsel6);
+    //Ands
+    Nand(a=a[6], b=nsel6, out=fandA6);
+    Nand(a=fandA6, b=fandA6, out=andA6);
+    Nand(a=b[6], b=sel, out=fandB6);
+    Nand(a=fandB6, b=fandB6, out=andB6);
+    //Or(Deny and nand)
+    Nand(a=andA6,b=andA6,out=orA6);
+    Nand(a=andB6,b=andB6,out=orB6);
+    Nand(a=orA6,b=orB6,out=out[6]);
+
+    //Nand Solution 8th bit
+    //Not
+    Nand(a=sel, b=sel, out=nsel7);
+    //Ands
+    Nand(a=a[7], b=nsel7, out=fandA7);
+    Nand(a=fandA7, b=fandA7, out=andA7);
+    Nand(a=b[7], b=sel, out=fandB7);
+    Nand(a=fandB7, b=fandB7, out=andB7);
+    //Or(Deny and nand)
+    Nand(a=andA7,b=andA7,out=orA7);
+    Nand(a=andB7,b=andB7,out=orB7);
+    Nand(a=orA7,b=orB7,out=out[7]);
+
+    //Nand Solution 9th bit
+    //Not
+    Nand(a=sel, b=sel, out=nsel8);
+    //Ands
+    Nand(a=a[8], b=nsel8, out=fandA8);
+    Nand(a=fandA8, b=fandA8, out=andA8);
+    Nand(a=b[8], b=sel, out=fandB8);
+    Nand(a=fandB8, b=fandB8, out=andB8);
+    //Or(Deny and nand)
+    Nand(a=andA8,b=andA8,out=orA8);
+    Nand(a=andB8,b=andB8,out=orB8);
+    Nand(a=orA8,b=orB8,out=out[8]);
+
+    //Nand Solution 10th bit
+    //Not
+    Nand(a=sel, b=sel, out=nsel9);
+    //Ands
+    Nand(a=a[9], b=nsel9, out=fandA9);
+    Nand(a=fandA9, b=fandA9, out=andA9);
+    Nand(a=b[9], b=sel, out=fandB9);
+    Nand(a=fandB9, b=fandB9, out=andB9);
+    //Or(Deny and nand)
+    Nand(a=andA9,b=andA9,out=orA9);
+    Nand(a=andB9,b=andB9,out=orB9);
+    Nand(a=orA9,b=orB9,out=out[9]);
+
+    //Nand Solution 11th bit
+    //Not
+    Nand(a=sel, b=sel, out=nsel10);
+    //Ands
+    Nand(a=a[10], b=nsel10, out=fandA10);
+    Nand(a=fandA10, b=fandA10, out=andA10);
+    Nand(a=b[10], b=sel, out=fandB10);
+    Nand(a=fandB10, b=fandB10, out=andB10);
+    //Or(Deny and nand)
+    Nand(a=andA10,b=andA10,out=orA10);
+    Nand(a=andB10,b=andB10,out=orB10);
+    Nand(a=orA10,b=orB10,out=out[10]);
+
+    //Nand Solution 12th bit
+    //Not
+    Nand(a=sel, b=sel, out=nsel11);
+    //Ands
+    Nand(a=a[11], b=nsel1, out=fandA11);
+    Nand(a=fandA11, b=fandA11, out=andA11);
+    Nand(a=b[11], b=sel, out=fandB11);
+    Nand(a=fandB11, b=fandB11, out=andB11);
+    //Or(Deny and nand)
+    Nand(a=andA11,b=andA11,out=orA11);
+    Nand(a=andB11,b=andB11,out=orB11);
+    Nand(a=orA11,b=orB11,out=out[11]);
+
+    //Nand Solution 13th bit
+    //Not
+    Nand(a=sel, b=sel, out=nsel12);
+    //Ands
+    Nand(a=a[12], b=nsel12, out=fandA12);
+    Nand(a=fandA12, b=fandA12, out=andA12);
+    Nand(a=b[12], b=sel, out=fandB12);
+    Nand(a=fandB12, b=fandB12, out=andB12);
+    //Or(Deny and nand)
+    Nand(a=andA12,b=andA12,out=orA12);
+    Nand(a=andB12,b=andB12,out=orB12);
+    Nand(a=orA12,b=orB12,out=out[12]);
+
+    //Nand Solution 14th bit
+    //Not
+    Nand(a=sel, b=sel, out=nsel13);
+    //Ands
+    Nand(a=a[13], b=nsel13, out=fandA13);
+    Nand(a=fandA13, b=fandA13, out=andA13);
+    Nand(a=b[13], b=sel, out=fandB13);
+    Nand(a=fandB13, b=fandB13, out=andB13);
+    //Or(Deny and nand)
+    Nand(a=andA13,b=andA13,out=orA13);
+    Nand(a=andB13,b=andB13,out=orB13);
+    Nand(a=orA13,b=orB13,out=out[13]);
+
+    //Nand Solution 15th bit
+    //Not
+    Nand(a=sel, b=sel, out=nsel14);
+    //Ands
+    Nand(a=a[14], b=nsel14, out=fandA14);
+    Nand(a=fandA14, b=fandA14, out=andA14);
+    Nand(a=b[14], b=sel, out=fandB14);
+    Nand(a=fandB14, b=fandB14, out=andB14);
+    //Or(Deny and nand)
+    Nand(a=andA14,b=andA14,out=orA14);
+    Nand(a=andB14,b=andB14,out=orB14);
+    Nand(a=orA14,b=orB14,out=out[14]);
+
+    //Nand Solution 16th bit
+    //Not
+    Nand(a=sel, b=sel, out=nsel15);
+    //Ands
+    Nand(a=a[15], b=nsel15, out=fandA15);
+    Nand(a=fandA15, b=fandA15, out=andA15);
+    Nand(a=b[15], b=sel, out=fandB15);
+    Nand(a=fandB15, b=fandB15, out=andB15);
+    //Or(Deny and nand)
+    Nand(a=andA15,b=andA15,out=orA15);
+    Nand(a=andB15,b=andB15,out=orB15);
+    Nand(a=orA15,b=orB15,out=out[15]);
+
+}

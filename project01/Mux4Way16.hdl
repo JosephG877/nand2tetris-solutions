@@ -1,0 +1,612 @@
+//X[i]=Mux16(Mux16(a[i],b[i],S0),Mux16(c[i],d[i],S0) S1)
+//Represent Mux16(a,b,s0) as Y:
+//Y[i]=(a[i].~s0)+(b[i].s0)
+//Represent Mux16(c,d,s0) as Z:
+//Z[i]=(c[i].~s0)+(d[i].s0)
+//Get to the final Mux16:
+//X[i]=(Y[i].~s1)+(Z[i].s1)
+
+CHIP Mux4Way16 {
+    IN a[16], b[16], c[16], d[16], sel[2];
+    OUT out[16];
+    
+    PARTS:
+    //SET SELECTOR VARIABLES/BITS
+    //NEGATE sel[0]
+    //CANON:Not(in=sel[0],out=nsel0);
+    Nand(a=sel[0],b=sel[0],out=nsel0);
+    
+    //NEGATE sel[1] for later use
+    //CANON:Not(in=sel[1],out=nsel1);
+    Nand(a=sel[1],b=sel[1],out=nsel1);
+
+    //GENERAL EQUATION
+//X[i]=Mux16(Mux16(a[i],b[i],S0),Mux16(c[i],d[i],S0) S1)
+    
+    //Represent Mux16(a[i],b[i],s0) as Y:
+    //Y[i]=(a[i].~s0)+(b[i].s0)
+
+    //BIT 0
+    //CANON:And(a=a[0],b=nsel0,out=andA0);
+    Nand(a=a[0],b=nsel0,out=ans0);
+    Nand(a=ans0,b=ans0,out=andA0);
+    //CANON:And(a=b[0],b=sel[0],out=andB0);
+    Nand(a=b[0],b=sel[0],out=bs0);
+    Nand(a=bs0,b=bs0,out=andB0);
+    //CANON:Or(a=andA0,b=andB0,out=Y0);
+    Nand(a=andA0,b=andA0,out=nandA0);
+    Nand(a=andB0,b=andB0,out=nandB0);
+    Nand(a=nandA0,b=nandB0,out=Y0);
+
+    //BIT 1
+    //CANON:And(a=a[1],b=nsel0,out=andA1);
+    Nand(a=a[1],b=nsel0,out=ans1);
+    Nand(a=ans1,b=ans0,out=andA1);
+    //CANON:And(a=b[1],b=sel[0],out=andB1);
+    Nand(a=b[1],b=sel[0],out=bs1);
+    Nand(a=bs1,b=bs1,out=andB1);
+    //CANON:Or(a=andA1,b=andB1,out=Y1);
+    Nand(a=andA1,b=andA1,out=nandA1);
+    Nand(a=andB1,b=andB1,out=nandB1);
+    Nand(a=nandA1,b=nandB1,out=Y1);
+
+    //BIT 2
+    //CANON:And(a=a[2],b=nsel0,out=andA2);
+    Nand(a=a[2],b=nsel0,out=ans2);
+    Nand(a=ans2,b=ans2,out=andA2);
+    //CANON:And(a=b[2],b=sel[0],out=andB2);
+    Nand(a=b[2],b=sel[0],out=bs2);
+    Nand(a=bs2,b=bs2,out=andB2);
+    //CANON:Or(a=andA2,b=andB2,out=Y2);
+    Nand(a=andA2,b=andA2,out=nandA2);
+    Nand(a=andB2,b=andB2,out=nandB2);
+    Nand(a=nandA2,b=nandB2,out=Y2);
+
+    //BIT 3
+    //CANON:And(a=a[3],b=nsel0,out=andA3);
+    Nand(a=a[3],b=nsel0,out=ans3);
+    Nand(a=ans3,b=ans3,out=andA3);
+    //CANON:And(a=b[3],b=sel[0],out=andB3);
+    Nand(a=b[3],b=sel[0],out=bs3);
+    Nand(a=bs3,b=bs3,out=andB3);
+    //CANON:Or(a=andA3,b=andB3,out=Y3);
+    Nand(a=andA3,b=andA3,out=nandA3);
+    Nand(a=andB3,b=andB3,out=nandB3);
+    Nand(a=nandA3,b=nandB3,out=Y3);   
+
+    //BIT 4
+    //CANON:And(a=a[4],b=nsel0,out=andA4);
+    Nand(a=a[4],b=nsel0,out=ans4);
+    Nand(a=ans4,b=ans4,out=andA4);
+    //CANON:And(a=b[4],b=sel[0],out=andB4);
+    Nand(a=b[4],b=sel[0],out=bs4);
+    Nand(a=bs4,b=bs4,out=andB4);
+    //CANON:Or(a=andA4,b=andB4,out=Y4);
+    Nand(a=andA4,b=andA4,out=nandA4);
+    Nand(a=andB4,b=andB4,out=nandB4);
+    Nand(a=nandA4,b=nandB4,out=Y4);
+
+    //BIT 5
+    //CANON:And(a=a[5],b=nsel0,out=andA5);
+    Nand(a=a[5],b=nsel0,out=ans5);
+    Nand(a=ans5,b=ans5,out=andA5);
+    //CANON:And(a=b[5],b=sel[0],out=andB5);
+    Nand(a=b[5],b=sel[0],out=bs5);
+    Nand(a=bs5,b=bs5,out=andB5);
+    //CANON:Or(a=andA5,b=andB5,out=Y5);
+    Nand(a=andA5,b=andA5,out=nandA5);
+    Nand(a=andB5,b=andB5,out=nandB5);
+    Nand(a=nandA5,b=nandB5,out=Y5);
+
+    //BIT 6
+    //CANON:And(a=a[6],b=nsel0,out=andA6);
+    Nand(a=a[6],b=nsel0,out=ans6);
+    Nand(a=ans6,b=ans6,out=andA6);
+    //CANON:And(a=b[6],b=sel[0],out=andB6);
+    Nand(a=b[6],b=sel[0],out=bs6);
+    Nand(a=bs6,b=bs6,out=andB6);
+    //CANON:Or(a=andA6,b=andB6,out=Y6);
+    Nand(a=andA6,b=andA6,out=nandA6);
+    Nand(a=andB6,b=andB6,out=nandB6);
+    Nand(a=nandA6,b=nandB6,out=Y6);      
+
+    //BIT 7
+    //CANON:And(a=a[7],b=nsel0,out=andA7);
+    Nand(a=a[7],b=nsel0,out=ans7);
+    Nand(a=ans7,b=ans7,out=andA7);
+    //CANON:And(a=b[7],b=sel[0],out=andB7);
+    Nand(a=b[7],b=sel[0],out=bs7);
+    Nand(a=bs7,b=bs7,out=andB7);
+    //CANON:Or(a=andA7,b=andB7,out=Y7);
+    Nand(a=andA7,b=andA7,out=nandA7);
+    Nand(a=andB7,b=andB7,out=nandB7);
+    Nand(a=nandA7,b=nandB7,out=Y7);
+
+    //BIT 8
+    //CANON:And(a=a[8],b=nsel0,out=andA8);
+    Nand(a=a[8],b=nsel0,out=ans8);
+    Nand(a=ans8,b=ans8,out=andA8);
+    //CANON:And(a=b[8],b=sel[0],out=andB8);
+    Nand(a=b[8],b=sel[0],out=bs8);
+    Nand(a=bs8,b=bs8,out=andB8);
+    //CANON:Or(a=andA8,b=andB8,out=Y8);
+    Nand(a=andA8,b=andA8,out=nandA8);
+    Nand(a=andB8,b=andB8,out=nandB8);
+    Nand(a=nandA8,b=nandB8,out=Y8);
+
+
+    //BIT 9
+    //CANON:And(a=a[9],b=nsel0,out=andA9);
+    Nand(a=a[9],b=nsel0,out=ans9);
+    Nand(a=ans9,b=ans9,out=andA9);
+    //CANON:And(a=b[9],b=sel[0],out=andB9);
+    Nand(a=b[9],b=sel[0],out=bs9);
+    Nand(a=bs9,b=bs9,out=andB9);
+    //CANON:Or(a=andA9,b=andB9,out=Y9);
+    Nand(a=andA9,b=andA9,out=nandA9);
+    Nand(a=andB9,b=andB9,out=nandB9);
+    Nand(a=nandA9,b=nandB9,out=Y9);
+
+    //BIT 10
+    //CANON:And(a=a[10],b=nsel0,out=andA10);
+    Nand(a=a[10],b=nsel0,out=ans10);
+    Nand(a=ans10,b=ans10,out=andA10);
+    //CANON:And(a=b[10],b=sel[0],out=andB10);
+    Nand(a=b[10],b=sel[0],out=bs10);
+    Nand(a=bs10,b=bs10,out=andB10);
+    //CANON:Or(a=andA10,b=andB10,out=Y10);
+    Nand(a=andA10,b=andA10,out=nandA10);
+    Nand(a=andB10,b=andB10,out=nandB10);
+    Nand(a=nandA10,b=nandB10,out=Y10);   
+
+    //BIT 11
+    //CANON:And(a=a[11],b=nsel0,out=andA11);
+    Nand(a=a[11],b=nsel0,out=ans11);
+    Nand(a=ans11,b=ans11,out=andA11);
+    //CANON:And(a=b[11],b=sel[0],out=andB11);
+    Nand(a=b[11],b=sel[0],out=bs11);
+    Nand(a=bs11,b=bs11,out=andB11);
+    //CANON:Or(a=andA11,b=andB11,out=Y11);
+    Nand(a=andA11,b=andA11,out=nandA11);
+    Nand(a=andB11,b=andB11,out=nandB11);
+    Nand(a=nandA11,b=nandB11,out=Y11);  
+
+    //BIT 12
+    //CANON:And(a=a[12],b=nsel0,out=andA12);
+    Nand(a=a[12],b=nsel0,out=ans12);
+    Nand(a=ans12,b=ans12,out=andA12);
+    //CANON:And(a=b[12],b=sel[0],out=andB12);
+    Nand(a=b[12],b=sel[0],out=bs12);
+    Nand(a=bs12,b=bs12,out=andB12);
+    //CANON:Or(a=andA12,b=andB12,out=Y12);
+    Nand(a=andA12,b=andA12,out=nandA12);
+    Nand(a=andB12,b=andB12,out=nandB12);
+    Nand(a=nandA12,b=nandB12,out=Y12); 
+
+    //BIT 13
+    //CANON:And(a=a[13],b=nsel0,out=andA13);
+    Nand(a=a[13],b=nsel0,out=ans13);
+    Nand(a=ans13,b=ans13,out=andA13);
+    //CANON:And(a=b[13],b=sel[0],out=andB13);
+    Nand(a=b[13],b=sel[0],out=bs13);
+    Nand(a=bs13,b=bs13,out=andB13);
+    //CANON:Or(a=andA13,b=andB13,out=Y13);
+    Nand(a=andA13,b=andA13,out=nandA13);
+    Nand(a=andB13,b=andB13,out=nandB13);
+    Nand(a=nandA13,b=nandB13,out=Y13);
+
+    //BIT 14
+    //CANON:And(a=a[14],b=nsel0,out=andA14);
+    Nand(a=a[14],b=nsel0,out=ans14);
+    Nand(a=ans14,b=ans14,out=andA14);
+    //CANON:And(a=b[14],b=sel[0],out=andB14);
+    Nand(a=b[14],b=sel[0],out=bs14);
+    Nand(a=bs14,b=bs14,out=andB14);
+    //CANON:Or(a=andA14,b=andB14,out=Y14);
+    Nand(a=andA14,b=andA14,out=nandA14);
+    Nand(a=andB14,b=andB14,out=nandB14);
+    Nand(a=nandA14,b=nandB14,out=Y14);
+
+    //BIT 15
+    //CANON:And(a=a[15],b=nsel0,out=andA15);
+    Nand(a=a[15],b=nsel0,out=ans15);
+    Nand(a=ans15,b=ans15,out=andA15);
+    //CANON:And(a=b[15],b=sel[0],out=andB15);
+    Nand(a=b[15],b=sel[0],out=bs15);
+    Nand(a=bs15,b=bs15,out=andB15);
+    //CANON:Or(a=andA15,b=andB15,out=Y15);
+    Nand(a=andA15,b=andA15,out=nandA15);
+    Nand(a=andB15,b=andB15,out=nandB15);
+    Nand(a=nandA15,b=nandB15,out=Y15);
+
+    //Represent Mux16(c,d,s0) as Z:
+    //Z[i]=(c[i].~s0)+(d[i].s0)
+
+    //BIT 0
+    //CANON:And(a=c[0],b=nsel0,out=andC0);
+    Nand(a=c[0],b=nsel0,out=cns0);
+    Nand(a=cns0,b=cns0,out=andC0);
+    //CANON:And(a=d[0],b=sel[0],out=andD0);
+    Nand(a=d[0],b=sel[0],out=dns0);
+    Nand(a=dns0,b=dns0,out=andD0);
+    //CANON:Or(a=andC0,b=andD0,out=Z0);
+    Nand(a=andC0,b=andC0,out=nandC0);
+    Nand(a=andD0,b=andD0,out=nandD0);
+    Nand(a=nandC0,b=nandD0,out=Z0);
+
+    //BIT 1
+    //CANON:And(a=c[1],b=nsel0,out=andC1);
+    Nand(a=c[1],b=nsel0,out=cns1);
+    Nand(a=cns1,b=cns1,out=andC1);
+    //CANON:And(a=d[1],b=sel[0],out=andD1);
+    Nand(a=d[1],b=sel[0],out=dns1);
+    Nand(a=dns1,b=dns1,out=andD1);
+    //CANON:Or(a=andC1,b=andD1,out=Z1);
+    Nand(a=andC1,b=andC1,out=nandC1);
+    Nand(a=andD1,b=andD1,out=nandD1);
+    Nand(a=nandC1,b=nandD1,out=Z1);
+
+    //BIT 2
+    //CANON:And(a=c[2],b=nsel0,out=andC2);
+    Nand(a=c[2],b=nsel0,out=cns2);
+    Nand(a=cns2,b=cns2,out=andC2);
+    //CANON:And(a=d[2],b=sel[0],out=andD2);
+    Nand(a=d[2],b=sel[0],out=dns2);
+    Nand(a=dns2,b=dns2,out=andD2);
+    //CANON:Or(a=andC2,b=andD2,out=Z2);
+    Nand(a=andC2,b=andC2,out=nandC2);
+    Nand(a=andD2,b=andD2,out=nandD2);
+    Nand(a=nandC2,b=nandD2,out=Z2);  
+
+    //BIT 3
+    //CANON:And(a=c[3],b=nsel0,out=andC3);
+    Nand(a=c[3],b=nsel0,out=cns3);
+    Nand(a=cns3,b=cns3,out=andC3);
+    //CANON:And(a=d[3],b=sel[0],out=andD3);
+    Nand(a=d[3],b=sel[0],out=dns3);
+    Nand(a=dns3,b=dns3,out=andD3);
+    //CANON:Or(a=andC3,b=andD3,out=Z3);
+    Nand(a=andC3,b=andC3,out=nandC3);
+    Nand(a=andD3,b=andD3,out=nandD3);
+    Nand(a=nandC3,b=nandD3,out=Z3);
+
+    //BIT 4
+    //CANON:And(a=c[4],b=nsel0,out=andC4);
+    Nand(a=c[4],b=nsel0,out=cns4);
+    Nand(a=cns4,b=cns4,out=andC4);
+    //CANON:And(a=d[4],b=sel[0],out=andD4);
+    Nand(a=d[4],b=sel[0],out=dns4);
+    Nand(a=dns4,b=dns4,out=andD4);
+    //CANON:Or(a=andC4,b=andD4,out=Z4);
+    Nand(a=andC4,b=andC4,out=nandC4);
+    Nand(a=andD4,b=andD4,out=nandD4);
+    Nand(a=nandC4,b=nandD4,out=Z4);
+
+    //BIT 5
+    //CANON:And(a=c[5],b=nsel0,out=andC5);
+    Nand(a=c[5],b=nsel0,out=cns5);
+    Nand(a=cns5,b=cns5,out=andC5);
+    //CANON:And(a=d[5],b=sel[0],out=andD5);
+    Nand(a=d[5],b=sel[0],out=dns5);
+    Nand(a=dns5,b=dns5,out=andD5);
+    //CANON:Or(a=andC5,b=andD5,out=Z5);
+    Nand(a=andC5,b=andC5,out=nandC5);
+    Nand(a=andD5,b=andD5,out=nandD5);
+    Nand(a=nandC5,b=nandD5,out=Z5);
+
+    //BIT 6
+    //CANON:And(a=c[6],b=nsel0,out=andC6);
+    Nand(a=c[6],b=nsel0,out=cns6);
+    Nand(a=cns6,b=cns6,out=andC6);
+    //CANON:And(a=d[6],b=sel[0],out=andD6);
+    Nand(a=d[6],b=sel[0],out=dns6);
+    Nand(a=dns6,b=dns6,out=andD6);
+    //CANON:Or(a=andC6,b=andD6,out=Z6);
+    Nand(a=andC6,b=andC6,out=nandC6);
+    Nand(a=andD6,b=andD6,out=nandD6);
+    Nand(a=nandC6,b=nandD6,out=Z6);
+
+    //BIT 7
+    //CANON:And(a=c[7],b=nsel0,out=andC7);
+    Nand(a=c[7],b=nsel0,out=cns7);
+    Nand(a=cns7,b=cns7,out=andC7);
+    //CANON:And(a=d[7],b=sel[0],out=andD7);
+    Nand(a=d[7],b=sel[0],out=dns7);
+    Nand(a=dns7,b=dns7,out=andD7);
+    //CANON:Or(a=andC7,b=andD7,out=Z7);
+    Nand(a=andC7,b=andC7,out=nandC7);
+    Nand(a=andD7,b=andD7,out=nandD7);
+    Nand(a=nandC7,b=nandD7,out=Z7);
+
+    //BIT 8
+    //CANON:And(a=c[8],b=nsel0,out=andC8);
+    Nand(a=c[8],b=nsel0,out=cns8);
+    Nand(a=cns8,b=cns8,out=andC8);
+    //CANON:And(a=d[8],b=sel[0],out=andD8);
+    Nand(a=d[8],b=sel[0],out=dns8);
+    Nand(a=dns8,b=dns8,out=andD8);
+    //CANON:Or(a=andC8,b=andD8,out=Z8);
+    Nand(a=andC8,b=andC8,out=nandC8);
+    Nand(a=andD8,b=andD8,out=nandD8);
+    Nand(a=nandC8,b=nandD8,out=Z8); 
+
+    //BIT 9
+    //CANON:And(a=c[9],b=nsel0,out=andC9);
+    Nand(a=c[9],b=nsel0,out=cns9);
+    Nand(a=cns9,b=cns9,out=andC9);
+    //CANON:And(a=d[9],b=sel[0],out=andD9);
+    Nand(a=d[9],b=sel[0],out=dns9);
+    Nand(a=dns9,b=dns9,out=andD9);
+    //CANON:Or(a=andC9,b=andD9,out=Z9);
+    Nand(a=andC9,b=andC9,out=nandC9);
+    Nand(a=andD9,b=andD9,out=nandD9);
+    Nand(a=nandC9,b=nandD9,out=Z9);
+
+    //BIT 10
+    //CANON:And(a=c[10],b=nsel0,out=andC10);
+    Nand(a=c[10],b=nsel0,out=cns10);
+    Nand(a=cns10,b=cns10,out=andC10);
+    //CANON:And(a=d[10],b=sel[0],out=andD10);
+    Nand(a=d[10],b=sel[0],out=dns10);
+    Nand(a=dns10,b=dns10,out=andD10);
+    //CANON:Or(a=andC10,b=andD10,out=Z10);
+    Nand(a=andC10,b=andC10,out=nandC10);
+    Nand(a=andD10,b=andD10,out=nandD10);
+    Nand(a=nandC10,b=nandD10,out=Z10);
+
+    //BIT 11
+    //CANON:And(a=c[11],b=nsel0,out=andC11);
+    Nand(a=c[11],b=nsel0,out=cns11);
+    Nand(a=cns11,b=cns11,out=andC11);
+    //CANON:And(a=d[11],b=sel[0],out=andD11);
+    Nand(a=d[11],b=sel[0],out=dns11);
+    Nand(a=dns11,b=dns11,out=andD11);
+    //CANON:Or(a=andC11,b=andD11,out=Z11);
+    Nand(a=andC11,b=andC11,out=nandC11);
+    Nand(a=andD11,b=andD11,out=nandD11);
+    Nand(a=nandC11,b=nandD11,out=Z11);
+
+    //BIT 12
+    //CANON:And(a=c[12],b=nsel0,out=andC12);
+    Nand(a=c[12],b=nsel0,out=cns12);
+    Nand(a=cns12,b=cns12,out=andC12);
+    //CANON:And(a=d[12],b=sel[0],out=andD12);
+    Nand(a=d[12],b=sel[0],out=dns12);
+    Nand(a=dns12,b=dns12,out=andD12);
+    //CANON:Or(a=andC12,b=andD12,out=Z12);
+    Nand(a=andC12,b=andC12,out=nandC12);
+    Nand(a=andD12,b=andD12,out=nandD12);
+    Nand(a=nandC12,b=nandD12,out=Z12);
+
+    //BIT 13
+    //CANON:And(a=c[13],b=nsel0,out=andC13);
+    Nand(a=c[13],b=nsel0,out=cns13);
+    Nand(a=cns13,b=cns13,out=andC13);
+    //CANON:And(a=d[13],b=sel[0],out=andD13);
+    Nand(a=d[13],b=sel[0],out=dns13);
+    Nand(a=dns13,b=dns13,out=andD13);
+    //CANON:Or(a=andC13,b=andD13,out=Z13);
+    Nand(a=andC13,b=andC13,out=nandC13);
+    Nand(a=andD13,b=andD13,out=nandD13);
+    Nand(a=nandC13,b=nandD13,out=Z13);
+
+    //BIT 14
+    //CANON:And(a=c[14],b=nsel0,out=andC14);
+    Nand(a=c[14],b=nsel0,out=cns14);
+    Nand(a=cns14,b=cns14,out=andC14);
+    //CANON:And(a=d[14],b=sel[0],out=andD14);
+    Nand(a=d[14],b=sel[0],out=dns14);
+    Nand(a=dns14,b=dns14,out=andD14);
+    //CANON:Or(a=andC14,b=andD14,out=Z14);
+    Nand(a=andC14,b=andC14,out=nandC14);
+    Nand(a=andD14,b=andD14,out=nandD14);
+    Nand(a=nandC14,b=nandD14,out=Z14);
+
+    //BIT 15
+    //CANON:And(a=c[15],b=nsel0,out=andC15);
+    Nand(a=c[15],b=nsel0,out=cns15);
+    Nand(a=cns15,b=cns15,out=andC15);
+    //CANON:And(a=d[15],b=sel[0],out=andD15);
+    Nand(a=d[15],b=sel[0],out=dns15);
+    Nand(a=dns15,b=dns15,out=andD15);
+    //CANON:Or(a=andC15,b=andD15,out=Z15);
+    Nand(a=andC15,b=andC15,out=nandC15);
+    Nand(a=andD15,b=andD15,out=nandD15);
+    Nand(a=nandC15,b=nandD15,out=Z15);
+
+    //Get to the final Mux16:
+    //X[i]=(Y[i].~s1)+(Z[i].s1)
+
+    //BIT 0
+    //CANON:And(a=Y0,b=nsel1,out=outY0);
+    Nand(a=Y0,b=nsel1,out=andY0);
+    Nand(a=andY0,b=andY0,out=outY0);
+    //CANON:And(a=Z0,b=sel[1],out=outZ0);
+    Nand(a=Z0,b=sel[1],out=andZ0);
+    Nand(a=andZ0,b=andZ0,out=outZ0);
+    //Or(a=outY0,b=outZ0,out=out[0]);
+    Nand(a=outY0,b=outY0,out=nandY0);
+    Nand(a=outZ0,b=outZ0,out=nandZ0);
+    Nand(a=nandY0,b=nandZ0,out=out[0]);
+
+    //BIT 1
+    //CANON:And(a=Y1,b=nsel1,out=outY1);
+    Nand(a=Y1,b=nsel1,out=andY1);
+    Nand(a=andY1,b=andY1,out=outY1);
+    //CANON:And(a=Z1,b=sel[1],out=outZ1);
+    Nand(a=Z1,b=sel[1],out=andZ1);
+    Nand(a=andZ1,b=andZ1,out=outZ1);
+    //Or(a=outY1,b=outZ1,out=out[1]);
+    Nand(a=outY1,b=outY1,out=nandY1);
+    Nand(a=outZ1,b=outZ1,out=nandZ1);
+    Nand(a=nandY1,b=nandZ1,out=out[1]);
+
+    //BIT 2
+    //CANON:And(a=Y2,b=nsel1,out=outY2);
+    Nand(a=Y2,b=nsel1,out=andY2);
+    Nand(a=andY2,b=andY2,out=outY2);
+    //CANON:And(a=Z2,b=sel[1],out=outZ2);
+    Nand(a=Z2,b=sel[1],out=andZ2);
+    Nand(a=andZ2,b=andZ2,out=outZ2);
+    //Or(a=outY2,b=outZ2,out=out[2]);
+    Nand(a=outY2,b=outY2,out=nandY2);
+    Nand(a=outZ2,b=outZ2,out=nandZ2);
+    Nand(a=nandY2,b=nandZ2,out=out[2]);
+
+    //BIT 3
+    //CANON:And(a=Y3,b=nsel1,out=outY3);
+    Nand(a=Y3,b=nsel1,out=andY3);
+    Nand(a=andY3,b=andY3,out=outY3);
+    //CANON:And(a=Z3,b=sel[1],out=outZ3);
+    Nand(a=Z3,b=sel[1],out=andZ3);
+    Nand(a=andZ3,b=andZ3,out=outZ3);
+    //Or(a=outY3,b=outZ3,out=out[3]);
+    Nand(a=outY3,b=outY3,out=nandY3);
+    Nand(a=outZ3,b=outZ3,out=nandZ3);
+    Nand(a=nandY3,b=nandZ3,out=out[3]);
+
+    //BIT 4
+    //CANON:And(a=Y4,b=nsel1,out=outY4);
+    Nand(a=Y4,b=nsel1,out=andY4);
+    Nand(a=andY4,b=andY4,out=outY4);
+    //CANON:And(a=Z4,b=sel[1],out=outZ4);
+    Nand(a=Z4,b=sel[1],out=andZ4);
+    Nand(a=andZ4,b=andZ4,out=outZ4);
+    //Or(a=outY4,b=outZ4,out=out[4]);
+    Nand(a=outY4,b=outY4,out=nandY4);
+    Nand(a=outZ4,b=outZ4,out=nandZ4);
+    Nand(a=nandY4,b=nandZ4,out=out[4]);
+
+    //BIT 5
+    //CANON:And(a=Y5,b=nsel1,out=outY5);
+    Nand(a=Y5,b=nsel1,out=andY5);
+    Nand(a=andY5,b=andY5,out=outY5);
+    //CANON:And(a=Z5,b=sel[1],out=outZ5);
+    Nand(a=Z5,b=sel[1],out=andZ5);
+    Nand(a=andZ5,b=andZ5,out=outZ5);
+    //Or(a=outY5,b=outZ5,out=out[5]);
+    Nand(a=outY5,b=outY5,out=nandY5);
+    Nand(a=outZ5,b=outZ5,out=nandZ5);
+    Nand(a=nandY5,b=nandZ5,out=out[5]);
+
+    //BIT 6
+    //CANON:And(a=Y6,b=nsel1,out=outY6);
+    Nand(a=Y6,b=nsel1,out=andY6);
+    Nand(a=andY6,b=andY6,out=outY6);
+    //CANON:And(a=Z6,b=sel[1],out=outZ6);
+    Nand(a=Z6,b=sel[1],out=andZ6);
+    Nand(a=andZ6,b=andZ6,out=outZ6);
+    //Or(a=outY6,b=outZ6,out=out[6]);
+    Nand(a=outY6,b=outY6,out=nandY6);
+    Nand(a=outZ6,b=outZ6,out=nandZ6);
+    Nand(a=nandY6,b=nandZ6,out=out[6]);
+
+    //BIT 7
+    //CANON:And(a=Y7,b=nsel1,out=outY7);
+    Nand(a=Y7,b=nsel1,out=andY7);
+    Nand(a=andY7,b=andY7,out=outY7);
+    //CANON:And(a=Z7,b=sel[1],out=outZ7);
+    Nand(a=Z7,b=sel[1],out=andZ7);
+    Nand(a=andZ7,b=andZ7,out=outZ7);
+    //Or(a=outY7,b=outZ7,out=out[7]);
+    Nand(a=outY7,b=outY7,out=nandY7);
+    Nand(a=outZ7,b=outZ7,out=nandZ7);
+    Nand(a=nandY7,b=nandZ7,out=out[7]);
+
+    //BIT 8
+    //CANON:And(a=Y8,b=nsel1,out=outY8);
+    Nand(a=Y8,b=nsel1,out=andY8);
+    Nand(a=andY8,b=andY8,out=outY8);
+    //CANON:And(a=Z8,b=sel[1],out=outZ8);
+    Nand(a=Z8,b=sel[1],out=andZ8);
+    Nand(a=andZ8,b=andZ8,out=outZ8);
+    //Or(a=outY8,b=outZ8,out=out[8]);
+    Nand(a=outY8,b=outY8,out=nandY8);
+    Nand(a=outZ8,b=outZ8,out=nandZ8);
+    Nand(a=nandY8,b=nandZ8,out=out[8]);
+
+    //BIT 9
+    //CANON:And(a=Y9,b=nsel1,out=outY9);
+    Nand(a=Y9,b=nsel1,out=andY9);
+    Nand(a=andY9,b=andY9,out=outY9);
+    //CANON:And(a=Z9,b=sel[1],out=outZ9);
+    Nand(a=Z9,b=sel[1],out=andZ9);
+    Nand(a=andZ9,b=andZ9,out=outZ9);
+    //Or(a=outY9,b=outZ9,out=out[9]);
+    Nand(a=outY9,b=outY9,out=nandY9);
+    Nand(a=outZ9,b=outZ9,out=nandZ9);
+    Nand(a=nandY9,b=nandZ9,out=out[9]);
+
+    //BIT 10
+    //CANON:And(a=Y10,b=nsel1,out=outY10);
+    Nand(a=Y10,b=nsel1,out=andY10);
+    Nand(a=andY10,b=andY10,out=outY10);
+    //CANON:And(a=Z10,b=sel[1],out=outZ10);
+    Nand(a=Z10,b=sel[1],out=andZ10);
+    Nand(a=andZ10,b=andZ10,out=outZ10);
+    //Or(a=outY10,b=outZ10,out=out[10]);
+    Nand(a=outY10,b=outY10,out=nandY10);
+    Nand(a=outZ10,b=outZ10,out=nandZ10);
+    Nand(a=nandY10,b=nandZ10,out=out[10]);
+
+    //BIT 11
+    //CANON:And(a=Y11,b=nsel1,out=outY11);
+    Nand(a=Y11,b=nsel1,out=andY11);
+    Nand(a=andY11,b=andY11,out=outY11);
+    //CANON:And(a=Z11,b=sel[1],out=outZ11);
+    Nand(a=Z11,b=sel[1],out=andZ11);
+    Nand(a=andZ11,b=andZ11,out=outZ11);
+    //Or(a=outY11,b=outZ11,out=out[11]);
+    Nand(a=outY11,b=outY11,out=nandY11);
+    Nand(a=outZ11,b=outZ11,out=nandZ11);
+    Nand(a=nandY11,b=nandZ11,out=out[11]);
+
+    //BIT 12
+    //CANON:And(a=Y12,b=nsel1,out=outY12);
+    Nand(a=Y12,b=nsel1,out=andY12);
+    Nand(a=andY12,b=andY12,out=outY12);
+    //CANON:And(a=Z12,b=sel[1],out=outZ12);
+    Nand(a=Z12,b=sel[1],out=andZ12);
+    Nand(a=andZ12,b=andZ12,out=outZ12);
+    //Or(a=outY12,b=outZ12,out=out[12]);
+    Nand(a=outY12,b=outY12,out=nandY12);
+    Nand(a=outZ12,b=outZ12,out=nandZ12);
+    Nand(a=nandY12,b=nandZ12,out=out[12]);
+
+    //BIT 13
+    //CANON:And(a=Y13,b=nsel1,out=outY13);
+    Nand(a=Y13,b=nsel1,out=andY13);
+    Nand(a=andY13,b=andY13,out=outY13);
+    //CANON:And(a=Z13,b=sel[1],out=outZ13);
+    Nand(a=Z13,b=sel[1],out=andZ13);
+    Nand(a=andZ13,b=andZ13,out=outZ13);
+    //Or(a=outY13,b=outZ13,out=out[13]);
+    Nand(a=outY13,b=outY13,out=nandY13);
+    Nand(a=outZ13,b=outZ13,out=nandZ13);
+    Nand(a=nandY13,b=nandZ13,out=out[13]);
+
+    //BIT 14
+    //CANON:And(a=Y14,b=nsel1,out=outY14);
+    Nand(a=Y14,b=nsel1,out=andY14);
+    Nand(a=andY14,b=andY14,out=outY14);
+    //CANON:And(a=Z14,b=sel[1],out=outZ14);
+    Nand(a=Z14,b=sel[1],out=andZ14);
+    Nand(a=andZ14,b=andZ14,out=outZ14);
+    //Or(a=outY14,b=outZ14,out=out[14]);
+    Nand(a=outY14,b=outY14,out=nandY14);
+    Nand(a=outZ14,b=outZ14,out=nandZ14);
+    Nand(a=nandY14,b=nandZ14,out=out[14]);
+
+    //BIT 15
+    //CANON:And(a=Y15,b=nsel1,out=outY15);
+    Nand(a=Y15,b=nsel1,out=andY15);
+    Nand(a=andY15,b=andY15,out=outY15);
+    //CANON:And(a=Z15,b=sel[1],out=outZ15);
+    Nand(a=Z15,b=sel[1],out=andZ15);
+    Nand(a=andZ15,b=andZ15,out=outZ15);
+    //Or(a=outY15,b=outZ15,out=out[15]);
+    Nand(a=outY15,b=outY15,out=nandY15);
+    Nand(a=outZ15,b=outZ15,out=nandZ15);
+    Nand(a=nandY15,b=nandZ15,out=out[15]);
+
+}

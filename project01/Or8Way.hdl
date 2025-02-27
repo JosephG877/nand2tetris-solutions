@@ -1,0 +1,42 @@
+CHIP Or8Way {
+    IN in[8];
+    OUT out;
+
+    PARTS:
+    //Canon Implementation
+    //Or(a=in[0], b=in[1], out=ab1);    1st
+    //Or(a=in[2], b=in[3], out=ab2);    2nd
+    //Or(a=in[4], b=in[5], out=ab3);    3rd
+    //Or(a=in[6], b=in[7], out=ab4);    4th
+
+    //Nand implementation
+    Nand(a=in[0], b=in[0], out=in00);   //1st
+    Nand(a=in[1], b=in[1], out=in11);   //1st
+    Nand(a=in00, b=in11, out=ab1);      //1st
+
+    Nand(a=in[2], b=in[2], out=in22);   //2nd
+    Nand(a=in[3], b=in[3], out=in33);   //2nd
+    Nand(a=in22, b=in33, out=ab2);      //2nd
+
+    Nand(a=in[4], b=in[4], out=in44);   //3rd
+    Nand(a=in[5], b=in[5], out=in55);   //3rd
+    Nand(a=in44, b=in55, out=ab3);      //3rd
+
+    Nand(a=in[6], b=in[6], out=in66);   //4th
+    Nand(a=in[7], b=in[7], out=in77);   //1st
+    Nand(a=in66, b=in77, out=ab4);      //1st
+
+    //Or(a=ab1,b=ab2,out=out1);
+    Nand(a=ab1, b=ab1, out=out1);
+    Nand(a=ab2, b=ab2, out=out2);
+    Nand(a=out1, b=out2, out=out12);
+    //Or(a=ab3,b=ab4,out=out2);
+    Nand(a=ab3, b=ab3, out=out3);
+    Nand(a=ab4, b=ab4, out=out4);
+    Nand(a=out3, b=out4, out=out34);
+    //Or(a=out1,b=out2,out=out);
+    Nand(a=out12,b=out12,out=preout1);
+    Nand(a=out34,b=out34,out=preout2);
+    Nand(a=preout1, b=preout2, out=out);
+
+}

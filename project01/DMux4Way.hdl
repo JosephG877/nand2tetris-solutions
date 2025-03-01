@@ -1,0 +1,49 @@
+CHIP DMux4Way {
+    IN in, sel[2];
+    OUT a, b, c, d;
+
+    PARTS:
+//a = X0
+//b = X1
+//c = X2
+//d = X3 
+
+//Negate Sel[2]
+//Not(in=sel[0],out=nsel0);
+Nand(a=sel[0],b=sel[0],out=nsel0);
+//Not(in=sel[1],out=nsel1);
+Nand(a=sel[1],b=sel[1],out=nsel1);
+
+//(XA, XB) = DMux(in, Sel1)   
+//XA = in . ~Sel1  
+//And(a=in,b=nsel1,out=XA);
+Nand(a=in,b=nsel1,out=andXA);
+Nand(a=andXA,b=andXA,out=XA);
+
+//XB = in . Sel1 
+//And(a=in,b=sel[1],out=XB);   
+Nand(a=in,b=sel[1],out=andXB);
+Nand(a=andXB,b=andXB,out=XB);
+
+//(X0, X1) = DMux(XA, Sel0)
+//X0 = XA . ~Sel0
+//And(a=XA,b=nsel0,out=a);
+Nand(a=XA,b=nsel0,out=andA);
+Nand(a=andA,b=andA,out=a);
+
+//X1 = XA . Sel0 
+//And(a=XA,b=sel[0],out=b);
+Nand(a=XA,b=sel[0],out=andB);
+Nand(a=andB,b=andB,out=b);
+
+//(X2, X3) = DMux(XB, Sel0) 
+//X2 = XB . ~Sel0
+//And(a=XB,b=nsel0,out=c);
+Nand(a=XB,b=nsel0,out=andC);
+Nand(a=andC,b=andC,out=c);
+
+//X3 = XB . Sel0
+//And(a=XB,b=sel[0],out=d);
+Nand(a=XB,b=sel[0],out=andD);
+Nand(a=andD,b=andD,out=d);
+}

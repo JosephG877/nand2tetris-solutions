@@ -1,0 +1,524 @@
+CHIP Mux8Way16 {
+    IN a[16], b[16], c[16], d[16],
+       e[16], f[16], g[16], h[16],
+       sel[3];
+    OUT out[16];
+
+    PARTS:
+//X[16]=
+//Mux16(Mux4Way16(a[i],b[i],c[i],d[i],sel1,sel0), {Y}
+//Mux4Way16(e[i],f[i],g[i],h[i],sel1,sel0),sel2) {Z}
+
+//Negate SEL[3]:
+Not(in=sel[0],out=nsel0);
+Not(in=sel[1],out=nsel1);
+Not(in=sel[2],out=nsel2);
+
+//---------FIRST PART - A~D - M4W16---------------
+//Y[16]=
+//Mux16(Mux16(a[i],b[i],sel0),  {Yab}
+//Mux16(c[i],d[i],sel0), sel1)  {Ycd}
+
+//Yab[16]=(a[16].~sel0)+(b[16].sel0)     <---
+//YAB_BIT0
+And(a=a[0],b=nsel0,out=andANSEL0);
+And(a=b[0],b=sel[0],out=andASEL0);
+Or(a=andANSEL0,b=andASEL0,out=YAB0); //YAB0=Yab[0]
+//YAB_BIT1
+And(a=a[1],b=nsel0,out=andANSEL1);
+And(a=b[1],b=sel[0],out=andASEL1);
+Or(a=andANSEL1,b=andASEL1,out=YAB1); //YAB1=Yab[1]
+//YAB_BIT2
+And(a=a[2],b=nsel0,out=andANSEL2);
+And(a=b[2],b=sel[0],out=andASEL2);
+Or(a=andANSEL2,b=andASEL2,out=YAB2); //YAB2=Yab[2]
+//YAB_BIT3
+And(a=a[3],b=nsel0,out=andANSEL3);
+And(a=b[3],b=sel[0],out=andASEL3);
+Or(a=andANSEL3,b=andASEL3,out=YAB3); //YAB3=Yab[3]
+//YAB_BIT4
+And(a=a[4],b=nsel0,out=andANSEL4);
+And(a=b[4],b=sel[0],out=andASEL4);
+Or(a=andANSEL4,b=andASEL4,out=YAB4); //YAB4=Yab[4]
+//YAB_BIT5
+And(a=a[5],b=nsel0,out=andANSEL5);
+And(a=b[5],b=sel[0],out=andASEL5);
+Or(a=andANSEL5,b=andASEL5,out=YAB5); //YAB5=Yab[5]
+//YAB_BIT6
+And(a=a[6],b=nsel0,out=andANSEL6);
+And(a=b[6],b=sel[0],out=andASEL6);
+Or(a=andANSEL6,b=andASEL6,out=YAB6); //YAB6=Yab[6]
+//YAB_BIT7
+And(a=a[7],b=nsel0,out=andANSEL7);
+And(a=b[7],b=sel[0],out=andASEL7);
+Or(a=andANSEL7,b=andASEL7,out=YAB7); //YAB7=Yab[7]
+//YAB_BIT8
+And(a=a[8],b=nsel0,out=andANSEL8);
+And(a=b[8],b=sel[0],out=andASEL8);
+Or(a=andANSEL8,b=andASEL8,out=YAB8); //YAB8=Yab[8]
+//YAB_BIT9
+And(a=a[9],b=nsel0,out=andANSEL9);
+And(a=b[9],b=sel[0],out=andASEL9);
+Or(a=andANSEL9,b=andASEL9,out=YAB9); //YAB9=Yab[9]
+//YAB_BIT10
+And(a=a[10],b=nsel0,out=andANSEL10);
+And(a=b[10],b=sel[0],out=andASEL10);
+Or(a=andANSEL10,b=andASEL10,out=YAB10); //YAB10=Yab[10]
+//YAB_BIT11
+And(a=a[11],b=nsel0,out=andANSEL11);
+And(a=b[11],b=sel[0],out=andASEL11);
+Or(a=andANSEL11,b=andASEL11,out=YAB11); //YAB11=Yab[11]
+//YAB_BIT12
+And(a=a[12],b=nsel0,out=andANSEL12);
+And(a=b[12],b=sel[0],out=andASEL12);
+Or(a=andANSEL12,b=andASEL12,out=YAB12); //YAB12=Yab[12]
+//YAB_BIT13
+And(a=a[13],b=nsel0,out=andANSEL13);
+And(a=b[13],b=sel[0],out=andASEL13);
+Or(a=andANSEL13,b=andASEL13,out=YAB13); //YAB13=Yab[13]
+//YAB_BIT14
+And(a=a[14],b=nsel0,out=andANSEL14);
+And(a=b[14],b=sel[0],out=andASEL14);
+Or(a=andANSEL14,b=andASEL14,out=YAB14); //YAB14=Yab[14]
+//YAB_BIT15
+And(a=a[15],b=nsel0,out=andANSEL15);
+And(a=b[15],b=sel[0],out=andASEL15);
+Or(a=andANSEL15,b=andASEL15,out=YAB15); //YAB15=Yab[15]
+
+
+//Ycd[16]=(c[16].~sel0)+(d[16].sel0)     <---
+//YCD_BIT0
+And(a=c[0],b=nsel0,out=andCNSEL0);
+And(a=d[0],b=sel[0],out=andDSEL0);
+Or(a=andCNSEL0,b=andDSEL0,out=YCD0); //YCD0=Ycd[0]
+//YCD_BIT1
+And(a=c[1],b=nsel0,out=andCNSEL1);
+And(a=d[1],b=sel[0],out=andDSEL1);
+Or(a=andCNSEL1,b=andDSEL1,out=YCD1); //YCD1=Ycd[1]
+//YCD_BIT2
+And(a=c[2],b=nsel0,out=andCNSEL2);
+And(a=d[2],b=sel[0],out=andDSEL2);
+Or(a=andCNSEL2,b=andDSEL2,out=YCD2); //YCD1=Ycd[2]
+//YCD_BIT3
+And(a=c[3],b=nsel0,out=andCNSEL3);
+And(a=d[3],b=sel[0],out=andDSEL3);
+Or(a=andCNSEL3,b=andDSEL3,out=YCD3); //YCD3=Ycd[3]
+//YCD_BIT4
+And(a=c[4],b=nsel0,out=andCNSEL4);
+And(a=d[4],b=sel[0],out=andDSEL4);
+Or(a=andCNSEL4,b=andDSEL4,out=YCD4); //YCD4=Ycd[4]
+//YCD_BIT5
+And(a=c[5],b=nsel0,out=andCNSEL5);
+And(a=d[5],b=sel[0],out=andDSEL5);
+Or(a=andCNSEL5,b=andDSEL5,out=YCD5); //YCD5=Ycd[5]
+//YCD_BIT6
+And(a=c[6],b=nsel0,out=andCNSEL6);
+And(a=d[6],b=sel[0],out=andDSEL6);
+Or(a=andCNSEL6,b=andDSEL6,out=YCD6); //YCD6=Ycd[6]
+//YCD_BIT7
+And(a=c[7],b=nsel0,out=andCNSEL7);
+And(a=d[7],b=sel[0],out=andDSEL7);
+Or(a=andCNSEL7,b=andDSEL7,out=YCD7); //YCD7=Ycd[7]
+//YCD_BIT8
+And(a=c[8],b=nsel0,out=andCNSEL8);
+And(a=d[8],b=sel[0],out=andDSEL8);
+Or(a=andCNSEL8,b=andDSEL8,out=YCD8); //YCD8=Ycd[8]
+//YCD_BIT9
+And(a=c[9],b=nsel0,out=andCNSEL9);
+And(a=d[9],b=sel[0],out=andDSEL9);
+Or(a=andCNSEL9,b=andDSEL9,out=YCD9); //YCD9=Ycd[9]
+//YCD_BIT10
+And(a=c[10],b=nsel0,out=andCNSEL10);
+And(a=d[10],b=sel[0],out=andDSEL10);
+Or(a=andCNSEL10,b=andDSEL10,out=YCD10); //YCD10=Ycd[10]
+//YCD_BIT11
+And(a=c[11],b=nsel0,out=andCNSEL11);
+And(a=d[11],b=sel[0],out=andDSEL11);
+Or(a=andCNSEL11,b=andDSEL11,out=YCD11); //YCD11=Ycd[11]
+//YCD_BIT12
+And(a=c[12],b=nsel0,out=andCNSEL12);
+And(a=d[12],b=sel[0],out=andDSEL12);
+Or(a=andCNSEL12,b=andDSEL12,out=YCD12); //YCD12=Ycd[12]
+//YCD_BIT13
+And(a=c[13],b=nsel0,out=andCNSEL13);
+And(a=d[13],b=sel[0],out=andDSEL13);
+Or(a=andCNSEL13,b=andDSEL13,out=YCD13); //YCD13=Ycd[13]
+//YCD_BIT14
+And(a=c[14],b=nsel0,out=andCNSEL14);
+And(a=d[14],b=sel[0],out=andDSEL14);
+Or(a=andCNSEL14,b=andDSEL14,out=YCD14); //YCD14=Ycd[14]
+//YCD_BIT15
+And(a=c[15],b=nsel0,out=andCNSEL15);
+And(a=d[15],b=sel[0],out=andDSEL15);
+Or(a=andCNSEL15,b=andDSEL15,out=YCD15); //YCD15=Ycd[15]
+
+//Y[16]=(Yab[16].~sel1)+(Ycd[16].sel1)   <---
+//Y_BIT0
+And(a=YAB0,b=nsel1,out=andYNSEL0);
+And(a=YCD0,b=sel[1],out=andYSEL0);
+Or(a=andYNSEL0,b=andYSEL0,out=Y0);  //Y_BIT0
+//Y_BIT1
+And(a=YAB1,b=nsel1,out=andYNSEL1);
+And(a=YCD1,b=sel[1],out=andYSEL1);
+Or(a=andYNSEL1,b=andYSEL1,out=Y1);  //Y_BIT1
+//Y_BIT2
+And(a=YAB2,b=nsel1,out=andYNSEL2);
+And(a=YCD2,b=sel[1],out=andYSEL2);
+Or(a=andYNSEL2,b=andYSEL2,out=Y2);  //Y_BIT2
+//Y_BIT3
+And(a=YAB3,b=nsel1,out=andYNSEL3);
+And(a=YCD3,b=sel[1],out=andYSEL3);
+Or(a=andYNSEL3,b=andYSEL3,out=Y3);  //Y_BIT3
+//Y_BIT4
+And(a=YAB4,b=nsel1,out=andYNSEL4);
+And(a=YCD4,b=sel[1],out=andYSEL4);
+Or(a=andYNSEL4,b=andYSEL4,out=Y4);  //Y_BIT4
+//Y_BIT5
+And(a=YAB5,b=nsel1,out=andYNSEL5);
+And(a=YCD5,b=sel[1],out=andYSEL5);
+Or(a=andYNSEL5,b=andYSEL5,out=Y5);  //Y_BIT5
+//Y_BIT6
+And(a=YAB6,b=nsel1,out=andYNSEL6);
+And(a=YCD6,b=sel[1],out=andYSEL6);
+Or(a=andYNSEL6,b=andYSEL6,out=Y6);  //Y_BIT6
+//Y_BIT7
+And(a=YAB7,b=nsel1,out=andYNSEL7);
+And(a=YCD7,b=sel[1],out=andYSEL7);
+Or(a=andYNSEL7,b=andYSEL7,out=Y7);  //Y_BIT7
+//Y_BIT8
+And(a=YAB8,b=nsel1,out=andYNSEL8);
+And(a=YCD8,b=sel[1],out=andYSEL8);
+Or(a=andYNSEL8,b=andYSEL8,out=Y8);  //Y_BIT8
+//Y_BIT9
+And(a=YAB9,b=nsel1,out=andYNSEL9);
+And(a=YCD9,b=sel[1],out=andYSEL9);
+Or(a=andYNSEL9,b=andYSEL9,out=Y9);  //Y_BIT9
+//Y_BIT10
+And(a=YAB10,b=nsel1,out=andYNSEL10);
+And(a=YCD10,b=sel[1],out=andYSEL10);
+Or(a=andYNSEL10,b=andYSEL10,out=Y10);  //Y_BIT10
+//Y_BIT11
+And(a=YAB11,b=nsel1,out=andYNSEL11);
+And(a=YCD11,b=sel[1],out=andYSEL11);
+Or(a=andYNSEL11,b=andYSEL11,out=Y11);  //Y_BIT11
+//Y_BIT12
+And(a=YAB12,b=nsel1,out=andYNSEL12);
+And(a=YCD12,b=sel[1],out=andYSEL12);
+Or(a=andYNSEL12,b=andYSEL12,out=Y12);  //Y_BIT12
+//Y_BIT13
+And(a=YAB13,b=nsel1,out=andYNSEL13);
+And(a=YCD13,b=sel[1],out=andYSEL13);
+Or(a=andYNSEL13,b=andYSEL13,out=Y13);  //Y_BIT13
+//Y_BIT14
+And(a=YAB14,b=nsel1,out=andYNSEL14);
+And(a=YCD14,b=sel[1],out=andYSEL14);
+Or(a=andYNSEL14,b=andYSEL14,out=Y14);  //Y_BIT14
+//Y_BIT15
+And(a=YAB15,b=nsel1,out=andYNSEL15);
+And(a=YCD15,b=sel[1],out=andYSEL15);
+Or(a=andYNSEL15,b=andYSEL15,out=Y15);  //Y_BIT15
+
+//---------SECOND PART - E~H - M4W16---------------
+//Z[16]=
+//Mux16(Mux16(e[i],f[i],sel0),  {Zef}
+//Mux16(g[i],h[i],sel0), sel1)  {Zgh}
+
+//Zef[16]=(e[16].~sel0)+(f[16].sel0)     <---
+//ZEF_BIT0
+And(a=e[0],b=nsel0,out=andENSEL0);
+And(a=f[0],b=sel[0],out=andESEL0);
+Or(a=andENSEL0,b=andESEL0,out=ZEF0); //ZEF0=Zef[0]
+//ZEF_BIT1
+And(a=e[1],b=nsel0,out=andENSEL1);
+And(a=f[1],b=sel[0],out=andESEL1);
+Or(a=andENSEL1,b=andESEL1,out=ZEF1); //ZEF1=Zef[1]
+//ZEF_BIT2
+And(a=e[2],b=nsel0,out=andENSEL2);
+And(a=f[2],b=sel[0],out=andESEL2);
+Or(a=andENSEL2,b=andESEL2,out=ZEF2); //ZEF2=Zef[2]
+//ZEF_BIT3
+And(a=e[3],b=nsel0,out=andENSEL3);
+And(a=f[3],b=sel[0],out=andESEL3);
+Or(a=andENSEL3,b=andESEL3,out=ZEF3); //ZEF3=Zef[3]
+//ZEF_BIT4
+And(a=e[4],b=nsel0,out=andENSEL4);
+And(a=f[4],b=sel[0],out=andESEL4);
+Or(a=andENSEL4,b=andESEL4,out=ZEF4); //ZEF4=Zef[4]
+//ZEF_BIT5
+And(a=e[5],b=nsel0,out=andENSEL5);
+And(a=f[5],b=sel[0],out=andESEL5);
+Or(a=andENSEL5,b=andESEL5,out=ZEF5); //ZEF5=Zef[5]
+//ZEF_BIT6
+And(a=e[6],b=nsel0,out=andENSEL6);
+And(a=f[6],b=sel[0],out=andESEL6);
+Or(a=andENSEL6,b=andESEL6,out=ZEF6); //ZEF6=Zef[6]
+//ZEF_BIT7
+And(a=e[7],b=nsel0,out=andENSEL7);
+And(a=f[7],b=sel[0],out=andESEL7);
+Or(a=andENSEL7,b=andESEL7,out=ZEF7); //ZEF7=Zef[7]
+//ZEF_BIT8
+And(a=e[8],b=nsel0,out=andENSEL8);
+And(a=f[8],b=sel[0],out=andESEL8);
+Or(a=andENSEL8,b=andESEL8,out=ZEF8); //ZEF8=Zef[8]
+//ZEF_BIT9
+And(a=e[9],b=nsel0,out=andENSEL9);
+And(a=f[9],b=sel[0],out=andESEL9);
+Or(a=andENSEL9,b=andESEL9,out=ZEF9); //ZEF9=Zef[9]
+//ZEF_BIT10
+And(a=e[10],b=nsel0,out=andENSEL10);
+And(a=f[10],b=sel[0],out=andESEL10);
+Or(a=andENSEL10,b=andESEL10,out=ZEF10); //ZEF10=Zef[10]
+//ZEF_BIT11
+And(a=e[11],b=nsel0,out=andENSEL11);
+And(a=f[11],b=sel[0],out=andESEL11);
+Or(a=andENSEL11,b=andESEL11,out=ZEF11); //ZEF11=Zef[11]
+//ZEF_BIT12
+And(a=e[12],b=nsel0,out=andENSEL12);
+And(a=f[12],b=sel[0],out=andESEL12);
+Or(a=andENSEL12,b=andESEL12,out=ZEF12); //ZEF12=Zef[12]
+//ZEF_BIT13
+And(a=e[13],b=nsel0,out=andENSEL13);
+And(a=f[13],b=sel[0],out=andESEL13);
+Or(a=andENSEL13,b=andESEL13,out=ZEF13); //ZEF13=Zef[13]
+//ZEF_BIT14
+And(a=e[14],b=nsel0,out=andENSEL14);
+And(a=f[14],b=sel[0],out=andESEL14);
+Or(a=andENSEL14,b=andESEL14,out=ZEF14); //ZEF14=Zef[14]
+//ZEF_BIT15
+And(a=e[15],b=nsel0,out=andENSEL15);
+And(a=f[15],b=sel[0],out=andESEL15);
+Or(a=andENSEL15,b=andESEL15,out=ZEF15); //ZEF15=Zef[15]
+
+//Zgh[16]=(g[16].~sel0)+(h[16].sel0)    <---
+//ZGH_BIT0
+And(a=g[0],b=nsel0,out=andGNSEL0);
+And(a=h[0],b=sel[0],out=andGSEL0);
+Or(a=andGNSEL0,b=andGSEL0,out=ZGH0); //ZGH=Zgh[0]
+//ZGH_BIT1
+And(a=g[1],b=nsel0,out=andGNSEL1);
+And(a=h[1],b=sel[0],out=andGSEL1);
+Or(a=andGNSEL1,b=andGSEL1,out=ZGH1); //ZGH=Zgh[1]
+//ZGH_BIT2
+And(a=g[2],b=nsel0,out=andGNSEL2);
+And(a=h[2],b=sel[0],out=andGSEL2);
+Or(a=andGNSEL2,b=andGSEL2,out=ZGH2); //ZGH=Zgh[2]
+//ZGH_BIT3
+And(a=g[3],b=nsel0,out=andGNSEL3);
+And(a=h[3],b=sel[0],out=andGSEL3);
+Or(a=andGNSEL3,b=andGSEL3,out=ZGH3); //ZGH=Zgh[3]
+//ZGH_BIT4
+And(a=g[4],b=nsel0,out=andGNSEL4);
+And(a=h[4],b=sel[0],out=andGSEL4);
+Or(a=andGNSEL4,b=andGSEL4,out=ZGH4); //ZGH=Zgh[4]
+//ZGH_BIT5
+And(a=g[5],b=nsel0,out=andGNSEL5);
+And(a=h[5],b=sel[0],out=andGSEL5);
+Or(a=andGNSEL5,b=andGSEL5,out=ZGH5); //ZGH=Zgh[5]
+//ZGH_BIT6
+And(a=g[6],b=nsel0,out=andGNSEL6);
+And(a=h[6],b=sel[0],out=andGSEL6);
+Or(a=andGNSEL6,b=andGSEL6,out=ZGH6); //ZGH=Zgh[6]
+//ZGH_BIT7
+And(a=g[7],b=nsel0,out=andGNSEL7);
+And(a=h[7],b=sel[0],out=andGSEL7);
+Or(a=andGNSEL7,b=andGSEL7,out=ZGH7); //ZGH=Zgh[7]
+//ZGH_BIT8
+And(a=g[8],b=nsel0,out=andGNSEL8);
+And(a=h[8],b=sel[0],out=andGSEL8);
+Or(a=andGNSEL8,b=andGSEL8,out=ZGH8); //ZGH=Zgh[8]
+//ZGH_BIT9
+And(a=g[9],b=nsel0,out=andGNSEL9);
+And(a=h[9],b=sel[0],out=andGSEL9);
+Or(a=andGNSEL9,b=andGSEL9,out=ZGH9); //ZGH=Zgh[9]
+//ZGH_BIT10
+And(a=g[10],b=nsel0,out=andGNSEL10);
+And(a=h[10],b=sel[0],out=andGSEL10);
+Or(a=andGNSEL10,b=andGSEL10,out=ZGH10); //ZGH=Zgh[10]
+//ZGH_BIT11
+And(a=g[11],b=nsel0,out=andGNSEL11);
+And(a=h[11],b=sel[0],out=andGSEL11);
+Or(a=andGNSEL11,b=andGSEL11,out=ZGH11); //ZGH=Zgh[11]
+//ZGH_BIT12
+And(a=g[12],b=nsel0,out=andGNSEL12);
+And(a=h[12],b=sel[0],out=andGSEL12);
+Or(a=andGNSEL12,b=andGSEL12,out=ZGH12); //ZGH=Zgh[12]
+//ZGH_BIT13
+And(a=g[13],b=nsel0,out=andGNSEL13);
+And(a=h[13],b=sel[0],out=andGSEL13);
+Or(a=andGNSEL13,b=andGSEL13,out=ZGH13); //ZGH=Zgh[13]
+//ZGH_BIT14
+And(a=g[14],b=nsel0,out=andGNSEL14);
+And(a=h[14],b=sel[0],out=andGSEL14);
+Or(a=andGNSEL14,b=andGSEL14,out=ZGH14); //ZGH=Zgh[14]
+//ZGH_BIT15
+And(a=g[15],b=nsel0,out=andGNSEL15);
+And(a=h[15],b=sel[0],out=andGSEL15);
+Or(a=andGNSEL15,b=andGSEL15,out=ZGH15); //ZGH=Zgh[15]
+
+//Z[16]=(Zef[16].~sel1)+(Zgh[16].sel1)  <---
+//Z_BIT0
+And(a=ZEF0,b=nsel1,out=andZNSEL0);
+And(a=ZGH0,b=sel[1],out=andZSEL0);
+Or(a=andZNSEL0,b=andZSEL0,out=Z0);  //Z_BIT0
+//Z_BIT1
+And(a=ZEF1,b=nsel1,out=andZNSEL1);
+And(a=ZGH1,b=sel[1],out=andZSEL1);
+Or(a=andZNSEL1,b=andZSEL1,out=Z1);  //Z_BIT1
+//Z_BIT2
+And(a=ZEF2,b=nsel1,out=andZNSEL2);
+And(a=ZGH2,b=sel[1],out=andZSEL2);
+Or(a=andZNSEL2,b=andZSEL2,out=Z2);  //Z_BIT2
+//Z_BIT3
+And(a=ZEF3,b=nsel1,out=andZNSEL3);
+And(a=ZGH3,b=sel[1],out=andZSEL3);
+Or(a=andZNSEL3,b=andZSEL3,out=Z3);  //Z_BIT3
+//Z_BIT4
+And(a=ZEF4,b=nsel1,out=andZNSEL4);
+And(a=ZGH4,b=sel[1],out=andZSEL4);
+Or(a=andZNSEL4,b=andZSEL4,out=Z4);  //Z_BIT4
+//Z_BIT5
+And(a=ZEF5,b=nsel1,out=andZNSEL5);
+And(a=ZGH5,b=sel[1],out=andZSEL5);
+Or(a=andZNSEL5,b=andZSEL5,out=Z5);  //Z_BIT5
+//Z_BIT6
+And(a=ZEF6,b=nsel1,out=andZNSEL6);
+And(a=ZGH6,b=sel[1],out=andZSEL6);
+Or(a=andZNSEL6,b=andZSEL6,out=Z6);  //Z_BIT6
+//Z_BIT7
+And(a=ZEF7,b=nsel1,out=andZNSEL7);
+And(a=ZGH7,b=sel[1],out=andZSEL7);
+Or(a=andZNSEL7,b=andZSEL7,out=Z7);  //Z_BIT7
+//Z_BIT8
+And(a=ZEF8,b=nsel1,out=andZNSEL8);
+And(a=ZGH8,b=sel[1],out=andZSEL8);
+Or(a=andZNSEL8,b=andZSEL8,out=Z8);  //Z_BIT8
+//Z_BIT9
+And(a=ZEF9,b=nsel1,out=andZNSEL9);
+And(a=ZGH9,b=sel[1],out=andZSEL9);
+Or(a=andZNSEL9,b=andZSEL9,out=Z9);  //Z_BIT9
+//Z_BIT10
+And(a=ZEF10,b=nsel1,out=andZNSEL10);
+And(a=ZGH10,b=sel[1],out=andZSEL10);
+Or(a=andZNSEL10,b=andZSEL10,out=Z10);  //Z_BIT10
+//Z_BIT11
+And(a=ZEF11,b=nsel1,out=andZNSEL11);
+And(a=ZGH11,b=sel[1],out=andZSEL11);
+Or(a=andZNSEL11,b=andZSEL11,out=Z11);  //Z_BIT11
+//Z_BIT12
+And(a=ZEF12,b=nsel1,out=andZNSEL12);
+And(a=ZGH12,b=sel[1],out=andZSEL12);
+Or(a=andZNSEL12,b=andZSEL12,out=Z12);  //Z_BIT12
+//Z_BIT13
+And(a=ZEF13,b=nsel1,out=andZNSEL13);
+And(a=ZGH13,b=sel[1],out=andZSEL13);
+Or(a=andZNSEL13,b=andZSEL13,out=Z13);  //Z_BIT13
+//Z_BIT14
+And(a=ZEF14,b=nsel1,out=andZNSEL14);
+And(a=ZGH14,b=sel[1],out=andZSEL14);
+Or(a=andZNSEL14,b=andZSEL14,out=Z14);  //Z_BIT14
+//Z_BIT15
+And(a=ZEF15,b=nsel1,out=andZNSEL15);
+And(a=ZGH15,b=sel[1],out=andZSEL15);
+Or(a=andZNSEL15,b=andZSEL15,out=Z15);  //Z_BIT15
+
+
+//---------FINAL PART - X(Y,Z,Sel2) - M16---------
+//X[16]=Mux16(Y[16],Z[16],sel2)    {X}
+
+//X[i]=(Y[16].~sel2)+(Z[16].sel2)   <---
+//X_BIT0
+And(a=Y0,b=nsel2,out=andY0);
+And(a=Z0,b=sel[2],out=andZ0);
+Or(a=andY0,b=andZ0,out=out[0]);     //X_BIT0
+//X_BIT1
+And(a=Y1,b=nsel2,out=andY1);
+And(a=Z1,b=sel[2],out=andZ1);
+Or(a=andY1,b=andZ1,out=out[1]);     //X_BIT1
+//X_BIT2
+And(a=Y2,b=nsel2,out=andY2);
+And(a=Z2,b=sel[2],out=andZ2);
+Or(a=andY2,b=andZ2,out=out[2]);     //X_BIT2
+//X_BIT3
+And(a=Y3,b=nsel2,out=andY3);
+And(a=Z3,b=sel[2],out=andZ3);
+Or(a=andY3,b=andZ3,out=out[3]);     //X_BIT3
+//X_BIT4
+And(a=Y4,b=nsel2,out=andY4);
+And(a=Z4,b=sel[2],out=andZ4);
+Or(a=andY4,b=andZ4,out=out[4]);     //X_BIT4
+//X_BIT5
+And(a=Y5,b=nsel2,out=andY5);
+And(a=Z5,b=sel[2],out=andZ5);
+Or(a=andY5,b=andZ5,out=out[5]);     //X_BIT5
+//X_BIT6
+And(a=Y6,b=nsel2,out=andY6);
+And(a=Z6,b=sel[2],out=andZ6);
+Or(a=andY6,b=andZ6,out=out[6]);     //X_BIT6
+//X_BIT7
+And(a=Y7,b=nsel2,out=andY7);
+And(a=Z7,b=sel[2],out=andZ7);
+Or(a=andY7,b=andZ7,out=out[7]);     //X_BIT7
+//X_BIT8
+And(a=Y8,b=nsel2,out=andY8);
+And(a=Z8,b=sel[2],out=andZ8);
+Or(a=andY8,b=andZ8,out=out[8]);     //X_BIT8
+//X_BIT9
+And(a=Y9,b=nsel2,out=andY9);
+And(a=Z9,b=sel[2],out=andZ9);
+Or(a=andY9,b=andZ9,out=out[9]);     //X_BIT9
+//X_BIT10
+And(a=Y10,b=nsel2,out=andY10);
+And(a=Z10,b=sel[2],out=andZ10);
+Or(a=andY10,b=andZ10,out=out[10]);     //X_BIT10
+//X_BIT11
+And(a=Y11,b=nsel2,out=andY11);
+And(a=Z11,b=sel[2],out=andZ11);
+Or(a=andY11,b=andZ11,out=out[11]);     //X_BIT11
+//X_BIT12
+And(a=Y12,b=nsel2,out=andY12);
+And(a=Z12,b=sel[2],out=andZ12);
+Or(a=andY12,b=andZ12,out=out[12]);     //X_BIT12
+//X_BIT13
+And(a=Y13,b=nsel2,out=andY13);
+And(a=Z13,b=sel[2],out=andZ13);
+Or(a=andY13,b=andZ13,out=out[13]);     //X_BIT13
+//X_BIT14
+And(a=Y14,b=nsel2,out=andY14);
+And(a=Z14,b=sel[2],out=andZ14);
+Or(a=andY14,b=andZ14,out=out[14]);     //X_BIT14
+//X_BIT15
+And(a=Y15,b=nsel2,out=andY15);
+And(a=Z15,b=sel[2],out=andZ15);
+Or(a=andY15,b=andZ15,out=out[15]);     //X_BIT15
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

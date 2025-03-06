@@ -1,0 +1,132 @@
+//THINKING ABOUT FULLADDER
+//The result of the truth table changes when
+//we see last 4 bits. It's quite evident that, when
+//the input variable a = 1, Carry acts as an OR gate
+//and Sum acts as a XNOR (or NOT XOR) gate.
+//The first half of the operation is exactly an HA.
+//a	b c	| carry	    |  sum
+//-----------------------------
+//0	0 0	|   0	    |  0
+//0	0 1	|   0	    |  1
+//0	1 0	|   0       |  1
+//0	1 1	|   1 (and) |  0  (xor)     <--HalfAdder
+//-----------------------------	   	    
+//1	0 0	|   0	    |  1
+//1	0 1	|   1	    |  0
+//1	1 0	|   1	    |  0
+//1	1 1	|   1 (or)  |  1  (xnor?)    <--???
+
+//"C" would be the carry in variable
+
+CHIP FullAdder {
+    IN a, b, c;  // 1-bit inputs
+    OUT sum,     // Right bit of a + b + c
+        carry;   // Left bit of a + b + c
+
+    PARTS:
+//EXPR:Sum = a xor b xor c
+//EXPR:Xor1 = a xor b
+//EXPR:Xor1 = (a . ~b) + (~a . b)
+
+//Not(in=a,out=notA);
+//Not(in=b,out=notB);
+//Not(in=c,out=notC);
+Nand(a=a,b=a,out=notA);
+Nand(a=b,b=b,out=notB);
+Nand(a=c,b=c,out=notC);
+
+//CANON:And(a=a,b=notB,out=fandS1);
+Nand(a=a,b=notB,out=and1);
+Nand(a=and1,b=and1,out=fandS1);
+
+//CANON:And(a=notA,b=b,out=sandS1);
+Nand(a=notA,b=b,out=and2);
+Nand(a=and2,b=and2,out=sandS1);
+
+//CANON:Or(a=fandS1,b=sandS1,out=xor1);
+Nand(a=fandS1,b=fandS1,out=or1);
+Nand(a=sandS1,b=sandS1,out=or2);
+Nand(a=or1,b=or2,out=xor1);
+
+//EXPR:Sum = (a xor b) xor c
+
+//EXPR:Sum = (Xor1) xor c
+//EXPR:Sum = (Xor1 . ~c) + (~Xor1 . c)
+
+Nand(a=xor1,b=xor1,out=nxor1);
+
+//CANON:And(a=xor1,b=notC,out=fandS2);
+Nand(a=xor1,b=notC,out=and3);
+Nand(a=and3,b=and3,out=fandS2);
+
+//CANON:And(a=nxor1,b=c,out=sandS2);
+Nand(a=nxor1,b=c,out=and4);
+Nand(a=and4,b=and4,out=sandS2);
+
+//CANON:Or(a=fandS2,b=sandS2,out=sum);
+Nand(a=fandS2,b=fandS2,out=or3);
+Nand(a=sandS2,b=sandS2,out=or4);
+Nand(a=or3,b=or4,out=sum);
+
+//EXPR:Carry = (a.b)+(b.c)+(a.c)
+
+//EXPR:And1 = a . b
+//CANON:And(a=a,b=b,out=andAB);
+Nand(a=a,b=b,out=and5);
+Nand(a=and5,b=and5,out=andAB);
+
+//EXPR:And2 = b . c
+//CANON:And(a=b,b=c,out=andBC);
+Nand(a=b,b=c,out=and6);
+Nand(a=and6,b=and6,out=andBC);
+
+//EXPR:And3 = a . c
+//CANON:And(a=a,b=c,out=andAC);
+Nand(a=a,b=c,out=and7);
+Nand(a=and7,b=and7,out=andAC);
+
+//EXPR:Or1 = And1 + And2
+//CANON:Or(a=andAB,b=andBC,out=orF);
+Nand(a=andAB,b=andAB,out=or5);
+Nand(a=andBC,b=andBC,out=or6);
+Nand(a=or5,b=or6,out=orF);
+
+//EXPR:Carry = Or1 + And3
+//CANON:Or(a=orF,b=andAC,out=carry);
+Nand(a=orF,b=orF,out=mid1);
+Nand(a=andAC,b=andAC,out=mid2);
+Nand(a=mid1,b=mid2,out=carry);
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

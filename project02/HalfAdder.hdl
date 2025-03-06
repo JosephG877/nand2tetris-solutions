@@ -1,0 +1,27 @@
+CHIP HalfAdder {
+    IN a, b;    // 1-bit inputs
+    OUT sum,    // Right bit of a + b 
+        carry;  // Left bit of a + b
+
+    PARTS:
+//SUM makes the same operation as XOR
+//Expr: X=(a+b).(~(a.b))
+//CANON:Xor(a=a,b=b,out=sum);
+//~(a.b)
+Nand(a=a,b=b,out=nandAB);
+//a+b
+Nand(a=a,b=a,out=notA);
+Nand(a=b,b=b,out=notB);
+Nand(a=notA,b=notB,out=orAB);
+//orAB.nandAB
+Nand(a=orAB,b=nandAB,out=negAB);
+Nand(a=negAB,b=negAB,out=sum);
+
+//CARRY makes the same operation as AND
+//Expr: X=a.b
+//CANON:And(a=a,b=b,out=carry);
+Nand(a=a,b=b,out=nopeAB);
+Nand(a=nopeAB,b=nopeAB,out=carry);
+
+}
+

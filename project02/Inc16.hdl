@@ -1,0 +1,174 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/2/Inc16.hdl
+/**
+ * 16-bit incrementer:
+ * out = in + 1
+ */
+CHIP Inc16 {
+    IN in[16];
+    OUT out[16];
+
+    PARTS:
+//BIT_0
+    //SUM_0
+    Nand(a=in[0],b=true,out=firstbin0);
+    Nand(a=in[0],b=firstbin0,out=orA0);
+    Nand(a=true,b=firstbin0,out=orB0);
+    Nand(a=orA0,b=orB0,out=out[0]);
+    //CARRY_0
+    Nand(a=firstbin0,b=firstbin0,out=CARRY0);
+
+//-----------------------------------------------------
+
+//BIT_1
+    //SUM_1
+    Nand(a=in[1],b=CARRY0,out=bin1);
+    Nand(a=in[1],b=bin1,out=orA1);
+    Nand(a=CARRY0,b=bin1,out=orB1);
+    Nand(a=orA1,b=orB1,out=out[1]);
+    //CARRY_1
+    Nand(a=bin1,b=bin1,out=CARRY1);
+
+//BIT_2
+    //SUM_2
+	Nand(a=in[2],b=CARRY1,out=bin2);
+	Nand(a=in[2],b=bin2,out=orA2);
+	Nand(a=CARRY1,b=bin2,out=orB2);
+	Nand(a=orA2,b=orB2,out=out[2]);
+    //CARRY_2
+	Nand(a=bin2,b=bin2,out=CARRY2);
+
+//BIT_3
+    //SUM_3
+    Nand(a=in[3],b=CARRY2,out=bin3);
+    Nand(a=in[3],b=bin3,out=orA3);
+    Nand(a=CARRY2,b=bin3,out=orB3);
+    Nand(a=orA3,b=orB3,out=out[3]);
+    //CARRY_3
+    Nand(a=bin3,b=bin3,out=CARRY3);
+
+//BIT_4
+    //SUM_4
+    Nand(a=in[4],b=CARRY3,out=bin4);
+    Nand(a=in[4],b=bin4,out=orA4);
+    Nand(a=CARRY3,b=bin4,out=orB4);
+    Nand(a=orA4,b=orB4,out=out[4]);
+    //CARRY_4
+    Nand(a=bin4,b=bin4,out=CARRY4);
+
+//BIT_5
+    //SUM_5
+    Nand(a=in[5],b=CARRY4,out=bin5);
+    Nand(a=in[5],b=bin5,out=orA5);
+    Nand(a=CARRY4,b=bin5,out=orB5);
+    Nand(a=orA5,b=orB5,out=out[5]);
+    //CARRY_5
+	Nand(a=bin5,b=bin5,out=CARRY5);
+
+//BIT_6
+    //SUM_6
+    Nand(a=in[6],b=CARRY5,out=bin6);
+    Nand(a=in[6],b=bin6,out=orA6);
+    Nand(a=CARRY5,b=bin6,out=orB6);
+    Nand(a=orA6,b=orB6,out=out[6]);
+    //CARRY_6
+	Nand(a=bin6,b=bin6,out=CARRY6);
+
+//BIT_7
+    //SUM_7
+    Nand(a=in[7],b=CARRY6,out=bin7);
+    Nand(a=in[7],b=bin7,out=orA7);
+    Nand(a=CARRY6,b=bin7,out=orB7);
+    Nand(a=orA7,b=orB7,out=out[7]);
+    //CARRY_7
+	Nand(a=bin7,b=bin7,out=CARRY7);
+
+//BIT_8
+    //SUM_8
+    Nand(a=in[8],b=CARRY7,out=bin8);
+    Nand(a=in[8],b=bin8,out=orA8);
+    Nand(a=CARRY7,b=bin8,out=orB8);
+    Nand(a=orA8,b=orB8,out=out[8]);
+    //CARRY_8
+	Nand(a=bin8,b=bin8,out=CARRY8);
+
+//BIT_9
+    //SUM_9
+    Nand(a=in[9],b=CARRY8,out=bin9);
+    Nand(a=in[9],b=bin9,out=orA9);
+    Nand(a=CARRY8,b=bin9,out=orB9);
+    Nand(a=orA9,b=orB9,out=out[9]);
+    //CARRY_9
+	Nand(a=bin9,b=bin9,out=CARRY9);
+
+//BIT_10
+    //SUM_10
+    Nand(a=in[10],b=CARRY9,out=bin10);
+    Nand(a=in[10],b=bin10,out=orA10);
+    Nand(a=CARRY9,b=bin10,out=orB10);
+    Nand(a=orA10,b=orB10,out=out[10]);
+    //CARRY_10
+	Nand(a=bin10,b=bin10,out=CARRY10);
+
+//BIT_11
+    //SUM_11
+    Nand(a=in[11],b=CARRY10,out=bin11);
+    Nand(a=in[11],b=bin11,out=orA11);
+    Nand(a=CARRY10,b=bin11,out=orB11);
+    Nand(a=orA11,b=orB11,out=out[11]);
+    //CARRY_11
+	Nand(a=bin11,b=bin11,out=CARRY11);
+
+//BIT_12
+    //SUM_12
+    Nand(a=in[12],b=CARRY11,out=bin12);
+    Nand(a=in[12],b=bin12,out=orA12);
+    Nand(a=CARRY11,b=bin12,out=orB12);
+    Nand(a=orA12,b=orB12,out=out[12]);
+    //CARRY_12
+	Nand(a=bin12,b=bin12,out=CARRY12);
+
+//BIT_13
+    //SUM_13
+    Nand(a=in[13],b=CARRY12,out=bin13);
+    Nand(a=in[13],b=bin13,out=orA13);
+    Nand(a=CARRY12,b=bin13,out=orB13);
+    Nand(a=orA13,b=orB13,out=out[13]);
+    //CARRY_13
+	Nand(a=bin13,b=bin13,out=CARRY13);
+
+//BIT_14
+    //SUM_14
+    Nand(a=in[14],b=CARRY13,out=bin14);
+    Nand(a=in[14],b=bin14,out=orA14);
+    Nand(a=CARRY13,b=bin14,out=orB14);
+    Nand(a=orA14,b=orB14,out=out[14]);
+    //CARRY_14
+	Nand(a=bin14,b=bin14,out=CARRY14);
+
+//BIT_15
+    //SUM_15
+    Nand(a=in[15],b=CARRY14,out=bin15);
+    Nand(a=in[15],b=bin15,out=orA15);
+    Nand(a=CARRY14,b=bin15,out=orB15);
+    Nand(a=orA15,b=orB15,out=out[15]);
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

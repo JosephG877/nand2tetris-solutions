@@ -69,7 +69,7 @@ CHIP ALU {
     	Nand(a=x[15],b=notZX,out=babel15);
     	Nand(a=babel15,b=babel15,out=outZX15);
 
-		// NX_BIT
+	// NX_BIT
 
     	// if (nx == 1) sets x = !x 
     	Nand(a=outZX0,b=nx,out=kraken0);
@@ -152,12 +152,14 @@ CHIP ALU {
     	Nand(a=nx,b=kraken15,out=orNXB15);
     	Nand(a=orNXA15,b=orNXB15,out=outNX15);
 
-		// ZY_BIT
+	// ZY_BIT
 
-	    // if (zy == 1) sets y = 0
-	    //Negate ZY
-	    Nand(a=zy,b=zy,out=notZY);
-	    //And XY,Not ZY
+	// if (zy == 1) sets y = 0
+
+	//Negate ZY
+	Nand(a=zy,b=zy,out=notZY);
+
+	//And XY,Not ZY
     	Nand(a=y[0],b=notZY,out=lynch0);
     	Nand(a=lynch0,b=lynch0,out=outZY0);
     	
@@ -289,83 +291,83 @@ CHIP ALU {
     	Nand(a=ny,b=fwwm15,out=orZYB15);
     	Nand(a=orZYA15,b=orZYB15,out=outNY15);
 		
-		// F_BIT
+	// F_BIT
 		
     	// if (f == 1)  sets out = x + y
     	// if (f == 0)  sets out = x & y
     	
-		//	---GENERAL EXPRESSION---
-		//OUT = (x . y) . (~f) + (FullAdder(x,y)) . f
+	//	---GENERAL EXPRESSION---
+	//OUT = (x . y) . (~f) + (FullAdder(x,y)) . f
 
-		//notF = (f | f)
-		Nand(a=f,b=f,out=notF);
+	//notF = (f | f)
+	Nand(a=f,b=f,out=notF);
 		
-		//andXY1..15 = (x[1..15] . y[1..15])
-		Nand(a=outNX0,b=outNY0,out=lodge0);
-		Nand(a=lodge0,b=lodge0,out=andXY0);
+	//andXY1..15 = (x[1..15] . y[1..15])
+	Nand(a=outNX0,b=outNY0,out=lodge0);
+	Nand(a=lodge0,b=lodge0,out=andXY0);
 		
-		Nand(a=outNX1,b=outNY1,out=lodge1);
-		Nand(a=lodge1,b=lodge1,out=andXY1);
+	Nand(a=outNX1,b=outNY1,out=lodge1);
+	Nand(a=lodge1,b=lodge1,out=andXY1);
 		
-		Nand(a=outNX2,b=outNY2,out=lodge2);
-		Nand(a=lodge2,b=lodge2,out=andXY2);
+	Nand(a=outNX2,b=outNY2,out=lodge2);
+	Nand(a=lodge2,b=lodge2,out=andXY2);
 		
-		Nand(a=outNX3,b=outNY3,out=lodge3);
-		Nand(a=lodge3,b=lodge3,out=andXY3);
+	Nand(a=outNX3,b=outNY3,out=lodge3);
+	Nand(a=lodge3,b=lodge3,out=andXY3);
 		
-		Nand(a=outNX4,b=outNY4,out=lodge4);
-		Nand(a=lodge4,b=lodge4,out=andXY4);
+	Nand(a=outNX4,b=outNY4,out=lodge4);
+	Nand(a=lodge4,b=lodge4,out=andXY4);
 		
-		Nand(a=outNX5,b=outNY5,out=lodge5);
-		Nand(a=lodge5,b=lodge5,out=andXY5);
+	Nand(a=outNX5,b=outNY5,out=lodge5);
+	Nand(a=lodge5,b=lodge5,out=andXY5);
 		
-		Nand(a=outNX6,b=outNY6,out=lodge6);
-		Nand(a=lodge6,b=lodge6,out=andXY6);
+	Nand(a=outNX6,b=outNY6,out=lodge6);
+	Nand(a=lodge6,b=lodge6,out=andXY6);
 		
-		Nand(a=outNX7,b=outNY7,out=lodge7);
-		Nand(a=lodge7,b=lodge7,out=andXY7);
+	Nand(a=outNX7,b=outNY7,out=lodge7);
+	Nand(a=lodge7,b=lodge7,out=andXY7);
 		
-		Nand(a=outNX8,b=outNY8,out=lodge8);
-		Nand(a=lodge8,b=lodge8,out=andXY8);
+	Nand(a=outNX8,b=outNY8,out=lodge8);
+	Nand(a=lodge8,b=lodge8,out=andXY8);
 		
-		Nand(a=outNX9,b=outNY9,out=lodge9);
-		Nand(a=lodge9,b=lodge9,out=andXY9);
+	Nand(a=outNX9,b=outNY9,out=lodge9);
+	Nand(a=lodge9,b=lodge9,out=andXY9);
 		
-		Nand(a=outNX10,b=outNY10,out=lodge10);
-		Nand(a=lodge10,b=lodge10,out=andXY10);
+	Nand(a=outNX10,b=outNY10,out=lodge10);
+	Nand(a=lodge10,b=lodge10,out=andXY10);
 		
-		Nand(a=outNX11,b=outNY11,out=lodge11);
-		Nand(a=lodge11,b=lodge11,out=andXY11);
+	Nand(a=outNX11,b=outNY11,out=lodge11);
+	Nand(a=lodge11,b=lodge11,out=andXY11);
 		
-		Nand(a=outNX12,b=outNY12,out=lodge12);
-		Nand(a=lodge12,b=lodge12,out=andXY12);
+	Nand(a=outNX12,b=outNY12,out=lodge12);
+	Nand(a=lodge12,b=lodge12,out=andXY12);
 		
-		Nand(a=outNX13,b=outNY13,out=lodge13);
-		Nand(a=lodge13,b=lodge13,out=andXY13);
+	Nand(a=outNX13,b=outNY13,out=lodge13);
+	Nand(a=lodge13,b=lodge13,out=andXY13);
 		
-		Nand(a=outNX14,b=outNY14,out=lodge14);
-		Nand(a=lodge14,b=lodge14,out=andXY14);
+	Nand(a=outNX14,b=outNY14,out=lodge14);
+	Nand(a=lodge14,b=lodge14,out=andXY14);
 		
-		Nand(a=outNX15,b=outNY15,out=lodge15);
-		Nand(a=lodge15,b=lodge15,out=andXY15);
+	Nand(a=outNX15,b=outNY15,out=lodge15);
+	Nand(a=lodge15,b=lodge15,out=andXY15);
 
         //FullAdder
-		//-> BIT_0 <LSB>
-		//SUM_0 = x[0] XOR y[0];
-		//CAR_0 = x[0] . y[0];
-		Nand(a=outNX0,b=outNY0,out=erhead0);
-		Nand(a=outNX0,b=erhead0,out=orFMA0);
-		Nand(a=outNY0,b=erhead0,out=orFMB0);
-		Nand(a=orFMA0,b=orFMB0,out=FULLMUX0);
+	//-> BIT_0 <LSB>
+	//SUM_0 = x[0] XOR y[0];
+	//CAR_0 = x[0] . y[0];
+	Nand(a=outNX0,b=outNY0,out=erhead0);
+	Nand(a=outNX0,b=erhead0,out=orFMA0);
+	Nand(a=outNY0,b=erhead0,out=orFMB0);
+	Nand(a=orFMA0,b=orFMB0,out=FULLMUX0);
 		
     	Nand(a=outNX0,b=outNY0,out=engrave0);
     	Nand(a=engrave0,b=engrave0,out=carry0);
 
-		//		-> BITS_1..15
-		//SUM_1..15 = (x[1..15] XOR y[1..15]) XOR cin[0..15];
-		//CAR_1..15 = (x[1..15].y[1..15])+(y[1..15].cin[0..15])+(x[1..15].cin[0..15])
+	//-> BITS_1..15
+	//SUM_1..15 = (x[1..15] XOR y[1..15]) XOR cin[0..15];
+	//CAR_1..15 = (x[1..15].y[1..15])+(y[1..15].cin[0..15])+(x[1..15].cin[0..15])
 		
-		//SUM: BIT_1
+	//SUM: BIT_1
         Nand(a=outNX1,b=outNY1,out=scranton1);
         Nand(a=outNX1,b=scranton1,out=orNXYA1);
         Nand(a=outNY1,b=scranton1,out=orNXYB1);
@@ -391,7 +393,7 @@ CHIP ALU {
         Nand(a=andXCIN1,b=andXCIN1,out=wormB1);
         Nand(a=wormA1,b=wormB1,out=carry1);
 
-		//SUM: BIT_2
+	//SUM: BIT_2
         Nand(a=outNX2,b=outNY2,out=scranton2);
         Nand(a=outNX2,b=scranton2,out=orNXYA2);
         Nand(a=outNY2,b=scranton2,out=orNXYB2);
@@ -418,7 +420,7 @@ CHIP ALU {
         Nand(a=andXCIN2,b=andXCIN2,out=wormB2);
         Nand(a=wormA2,b=wormB2,out=carry2);
 
-		//SUM: BIT_3
+	//SUM: BIT_3
         Nand(a=outNX3,b=outNY3,out=scranton3);
         Nand(a=outNX3,b=scranton3,out=orNXYA3);
         Nand(a=outNY3,b=scranton3,out=orNXYB3);
@@ -445,7 +447,7 @@ CHIP ALU {
         Nand(a=andXCIN3,b=andXCIN3,out=wormB3);
         Nand(a=wormA3,b=wormB3,out=carry3);
 
-		//SUM: BIT_4
+	//SUM: BIT_4
         Nand(a=outNX4,b=outNY4,out=scranton4);
         Nand(a=outNX4,b=scranton4,out=orNXYA4);
         Nand(a=outNY4,b=scranton4,out=orNXYB4);
@@ -471,7 +473,7 @@ CHIP ALU {
         Nand(a=andXCIN4,b=andXCIN4,out=wormB4);
         Nand(a=wormA4,b=wormB4,out=carry4);
         
-		//SUM: BIT_5
+	//SUM: BIT_5
         Nand(a=outNX5,b=outNY5,out=scranton5);
         Nand(a=outNX5,b=scranton5,out=orNXYA5);
         Nand(a=outNY5,b=scranton5,out=orNXYB5);
@@ -497,7 +499,7 @@ CHIP ALU {
         Nand(a=andXCIN5,b=andXCIN5,out=wormB5);
         Nand(a=wormA5,b=wormB5,out=carry5);
 
-		//SUM: BIT_6
+	//SUM: BIT_6
         Nand(a=outNX6,b=outNY6,out=scranton6);
         Nand(a=outNX6,b=scranton6,out=orNXYA6);
         Nand(a=outNY6,b=scranton6,out=orNXYB6);
@@ -523,7 +525,7 @@ CHIP ALU {
         Nand(a=andXCIN6,b=andXCIN6,out=wormB6);
         Nand(a=wormA6,b=wormB6,out=carry6);
 
-		//SUM: BIT_7
+	//SUM: BIT_7
         Nand(a=outNX7,b=outNY7,out=scranton7);
         Nand(a=outNX7,b=scranton7,out=orNXYA7);
         Nand(a=outNY7,b=scranton7,out=orNXYB7);
@@ -549,7 +551,7 @@ CHIP ALU {
         Nand(a=andXCIN7,b=andXCIN7,out=wormB7);
         Nand(a=wormA7,b=wormB7,out=carry7);
 
-		//SUM: BIT_8
+	//SUM: BIT_8
         Nand(a=outNX8,b=outNY8,out=scranton8);
         Nand(a=outNX8,b=scranton8,out=orNXYA8);
         Nand(a=outNY8,b=scranton8,out=orNXYB8);
@@ -575,7 +577,7 @@ CHIP ALU {
         Nand(a=andXCIN8,b=andXCIN8,out=wormB8);
         Nand(a=wormA8,b=wormB8,out=carry8);
 
-		//SUM: BIT_9
+	//SUM: BIT_9
         Nand(a=outNX9,b=outNY9,out=scranton9);
         Nand(a=outNX9,b=scranton9,out=orNXYA9);
         Nand(a=outNY9,b=scranton9,out=orNXYB9);
@@ -602,7 +604,7 @@ CHIP ALU {
         Nand(a=andXCIN9,b=andXCIN9,out=wormB9);
         Nand(a=wormA9,b=wormB9,out=carry9);
 
-		//SUM: BIT_10
+	//SUM: BIT_10
         Nand(a=outNX10,b=outNY10,out=scranton10);
         Nand(a=outNX10,b=scranton10,out=orNXYA10);
         Nand(a=outNY10,b=scranton10,out=orNXYB10);
@@ -628,7 +630,7 @@ CHIP ALU {
         Nand(a=andXCIN10,b=andXCIN10,out=wormB10);
         Nand(a=wormA10,b=wormB10,out=carry10);
 
-		//SUM: BIT_11
+	//SUM: BIT_11
         Nand(a=outNX11,b=outNY11,out=scranton11);
         Nand(a=outNX11,b=scranton11,out=orNXYA11);
         Nand(a=outNY11,b=scranton11,out=orNXYB11);
@@ -654,7 +656,7 @@ CHIP ALU {
         Nand(a=andXCIN11,b=andXCIN11,out=wormB11);
         Nand(a=wormA11,b=wormB11,out=carry11);
 
-		//SUM: BIT_12
+	//SUM: BIT_12
         Nand(a=outNX12,b=outNY12,out=scranton12);
         Nand(a=outNX12,b=scranton12,out=orNXYA12);
         Nand(a=outNY12,b=scranton12,out=orNXYB12);
@@ -680,7 +682,7 @@ CHIP ALU {
         Nand(a=andXCIN12,b=andXCIN12,out=wormB12);
         Nand(a=wormA12,b=wormB12,out=carry12);
 
-		//SUM: BIT_13
+	//SUM: BIT_13
         Nand(a=outNX13,b=outNY13,out=scranton13);
         Nand(a=outNX13,b=scranton13,out=orNXYA13);
         Nand(a=outNY13,b=scranton13,out=orNXYB13);
@@ -706,7 +708,7 @@ CHIP ALU {
         Nand(a=andXCIN13,b=andXCIN13,out=wormB13);
         Nand(a=wormA13,b=wormB13,out=carry13);
 
-		//SUM: BIT_14
+	//SUM: BIT_14
         Nand(a=outNX14,b=outNY14,out=scranton14);
         Nand(a=outNX14,b=scranton14,out=orNXYA14);
         Nand(a=outNY14,b=scranton14,out=orNXYB14);
@@ -732,7 +734,7 @@ CHIP ALU {
         Nand(a=andXCIN14,b=andXCIN14,out=wormB14);
         Nand(a=wormA14,b=wormB14,out=carry14);
 
-		//SUM: BIT_15
+	//SUM: BIT_15
         Nand(a=outNX15,b=outNY15,out=scranton15);
         Nand(a=outNX15,b=scranton15,out=orNXYA15);
         Nand(a=outNY15,b=scranton15,out=orNXYB15);
@@ -744,179 +746,179 @@ CHIP ALU {
         Nand(a=orXXYA15,b=orXXYB15,out=FULLMUX15);
         
         // MULTIPLEX - F AS SELECTOR
-		//And16(a,notF)		<--- fandMUX0..15
-		//a -> andXY0..15
-		Nand(a=andXY0,b=notF,out=aggro0);
-		Nand(a=aggro0,b=aggro0,out=fandMUX0);
+	//And16(a,notF)		<--- fandMUX0..15
+	//a -> andXY0..15
+	Nand(a=andXY0,b=notF,out=aggro0);
+	Nand(a=aggro0,b=aggro0,out=fandMUX0);
 		
-		Nand(a=andXY1,b=notF,out=aggro1);
-		Nand(a=aggro1,b=aggro1,out=fandMUX1);
+	Nand(a=andXY1,b=notF,out=aggro1);
+	Nand(a=aggro1,b=aggro1,out=fandMUX1);
 		
-		Nand(a=andXY2,b=notF,out=aggro2);
-		Nand(a=aggro2,b=aggro2,out=fandMUX2);
+	Nand(a=andXY2,b=notF,out=aggro2);
+	Nand(a=aggro2,b=aggro2,out=fandMUX2);
 				
-		Nand(a=andXY3,b=notF,out=aggro3);
-		Nand(a=aggro3,b=aggro3,out=fandMUX3);
+	Nand(a=andXY3,b=notF,out=aggro3);
+	Nand(a=aggro3,b=aggro3,out=fandMUX3);
 		
-		Nand(a=andXY4,b=notF,out=aggro4);
-		Nand(a=aggro4,b=aggro4,out=fandMUX4);
+	Nand(a=andXY4,b=notF,out=aggro4);
+	Nand(a=aggro4,b=aggro4,out=fandMUX4);
 		
-		Nand(a=andXY5,b=notF,out=aggro5);
-		Nand(a=aggro5,b=aggro5,out=fandMUX5);
+	Nand(a=andXY5,b=notF,out=aggro5);
+	Nand(a=aggro5,b=aggro5,out=fandMUX5);
 		
-		Nand(a=andXY6,b=notF,out=aggro6);
-		Nand(a=aggro6,b=aggro6,out=fandMUX6);
+	Nand(a=andXY6,b=notF,out=aggro6);
+	Nand(a=aggro6,b=aggro6,out=fandMUX6);
 		
-		Nand(a=andXY7,b=notF,out=aggro7);
-		Nand(a=aggro7,b=aggro7,out=fandMUX7);
+	Nand(a=andXY7,b=notF,out=aggro7);
+	Nand(a=aggro7,b=aggro7,out=fandMUX7);
 		
-		Nand(a=andXY8,b=notF,out=aggro8);
-		Nand(a=aggro8,b=aggro8,out=fandMUX8);
+	Nand(a=andXY8,b=notF,out=aggro8);
+	Nand(a=aggro8,b=aggro8,out=fandMUX8);
 		
-		Nand(a=andXY9,b=notF,out=aggro9);
-		Nand(a=aggro9,b=aggro9,out=fandMUX9);
+	Nand(a=andXY9,b=notF,out=aggro9);
+	Nand(a=aggro9,b=aggro9,out=fandMUX9);
 		
-		Nand(a=andXY10,b=notF,out=aggro10);
-		Nand(a=aggro10,b=aggro10,out=fandMUX10);
+	Nand(a=andXY10,b=notF,out=aggro10);
+	Nand(a=aggro10,b=aggro10,out=fandMUX10);
 		
-		Nand(a=andXY11,b=notF,out=aggro11);
-		Nand(a=aggro11,b=aggro11,out=fandMUX11);
+	Nand(a=andXY11,b=notF,out=aggro11);
+	Nand(a=aggro11,b=aggro11,out=fandMUX11);
 		
-		Nand(a=andXY12,b=notF,out=aggro12);
-		Nand(a=aggro12,b=aggro12,out=fandMUX12);
+	Nand(a=andXY12,b=notF,out=aggro12);
+	Nand(a=aggro12,b=aggro12,out=fandMUX12);
 		
-		Nand(a=andXY13,b=notF,out=aggro13);
-		Nand(a=aggro13,b=aggro13,out=fandMUX13);
+	Nand(a=andXY13,b=notF,out=aggro13);
+	Nand(a=aggro13,b=aggro13,out=fandMUX13);
 		
-		Nand(a=andXY14,b=notF,out=aggro14);
-		Nand(a=aggro14,b=aggro14,out=fandMUX14);
+	Nand(a=andXY14,b=notF,out=aggro14);
+	Nand(a=aggro14,b=aggro14,out=fandMUX14);
 		
-		Nand(a=andXY15,b=notF,out=aggro15);
-		Nand(a=aggro15,b=aggro15,out=fandMUX15);
+	Nand(a=andXY15,b=notF,out=aggro15);
+	Nand(a=aggro15,b=aggro15,out=fandMUX15);
 		
-		//And16(b,f)		<--- sandMUX0..15
-		//a -> FULLMUX0..15
-		Nand(a=FULLMUX0,b=f,out=masterhit0);
-		Nand(a=masterhit0,b=masterhit0,out=sandMUX0);
+	//And16(b,f)		<--- sandMUX0..15
+	//a -> FULLMUX0..15
+	Nand(a=FULLMUX0,b=f,out=masterhit0);
+	Nand(a=masterhit0,b=masterhit0,out=sandMUX0);
 		
-		Nand(a=FULLMUX1,b=f,out=masterhit1);
-		Nand(a=masterhit1,b=masterhit1,out=sandMUX1);
+	Nand(a=FULLMUX1,b=f,out=masterhit1);
+	Nand(a=masterhit1,b=masterhit1,out=sandMUX1);
 		
-		Nand(a=FULLMUX2,b=f,out=masterhit2);
-		Nand(a=masterhit2,b=masterhit2,out=sandMUX2);
+	Nand(a=FULLMUX2,b=f,out=masterhit2);
+	Nand(a=masterhit2,b=masterhit2,out=sandMUX2);
 		
-		Nand(a=FULLMUX3,b=f,out=masterhit3);
-		Nand(a=masterhit3,b=masterhit3,out=sandMUX3);
+	Nand(a=FULLMUX3,b=f,out=masterhit3);
+	Nand(a=masterhit3,b=masterhit3,out=sandMUX3);
 		
-		Nand(a=FULLMUX4,b=f,out=masterhit4);
-		Nand(a=masterhit4,b=masterhit4,out=sandMUX4);
+	Nand(a=FULLMUX4,b=f,out=masterhit4);
+	Nand(a=masterhit4,b=masterhit4,out=sandMUX4);
 		
-		Nand(a=FULLMUX5,b=f,out=masterhit5);
-		Nand(a=masterhit5,b=masterhit5,out=sandMUX5);
+	Nand(a=FULLMUX5,b=f,out=masterhit5);
+	Nand(a=masterhit5,b=masterhit5,out=sandMUX5);
 		
-		Nand(a=FULLMUX6,b=f,out=masterhit6);
-		Nand(a=masterhit6,b=masterhit6,out=sandMUX6);
+	Nand(a=FULLMUX6,b=f,out=masterhit6);
+	Nand(a=masterhit6,b=masterhit6,out=sandMUX6);
 		
-		Nand(a=FULLMUX7,b=f,out=masterhit7);
-		Nand(a=masterhit7,b=masterhit7,out=sandMUX7);
+	Nand(a=FULLMUX7,b=f,out=masterhit7);
+	Nand(a=masterhit7,b=masterhit7,out=sandMUX7);
 		
-		Nand(a=FULLMUX8,b=f,out=masterhit8);
-		Nand(a=masterhit8,b=masterhit8,out=sandMUX8);
+	Nand(a=FULLMUX8,b=f,out=masterhit8);
+	Nand(a=masterhit8,b=masterhit8,out=sandMUX8);
 		
-		Nand(a=FULLMUX9,b=f,out=masterhit9);
-		Nand(a=masterhit9,b=masterhit9,out=sandMUX9);
+	Nand(a=FULLMUX9,b=f,out=masterhit9);
+	Nand(a=masterhit9,b=masterhit9,out=sandMUX9);
 		
-		Nand(a=FULLMUX10,b=f,out=masterhit10);
-		Nand(a=masterhit10,b=masterhit10,out=sandMUX10);
+	Nand(a=FULLMUX10,b=f,out=masterhit10);
+	Nand(a=masterhit10,b=masterhit10,out=sandMUX10);
 		
-		Nand(a=FULLMUX11,b=f,out=masterhit11);
-		Nand(a=masterhit11,b=masterhit11,out=sandMUX11);
+	Nand(a=FULLMUX11,b=f,out=masterhit11);
+	Nand(a=masterhit11,b=masterhit11,out=sandMUX11);
 		
-		Nand(a=FULLMUX12,b=f,out=masterhit12);
-		Nand(a=masterhit12,b=masterhit12,out=sandMUX12);
+	Nand(a=FULLMUX12,b=f,out=masterhit12);
+	Nand(a=masterhit12,b=masterhit12,out=sandMUX12);
 		
-		Nand(a=FULLMUX13,b=f,out=masterhit13);
-		Nand(a=masterhit13,b=masterhit13,out=sandMUX13);
+	Nand(a=FULLMUX13,b=f,out=masterhit13);
+	Nand(a=masterhit13,b=masterhit13,out=sandMUX13);
 		
-		Nand(a=FULLMUX14,b=f,out=masterhit14);
-		Nand(a=masterhit14,b=masterhit14,out=sandMUX14);
+	Nand(a=FULLMUX14,b=f,out=masterhit14);
+	Nand(a=masterhit14,b=masterhit14,out=sandMUX14);
 		
-		Nand(a=FULLMUX15,b=f,out=masterhit15);
-		Nand(a=masterhit15,b=masterhit15,out=sandMUX15);
+	Nand(a=FULLMUX15,b=f,out=masterhit15);
+	Nand(a=masterhit15,b=masterhit15,out=sandMUX15);
 		
-		//Or16(sandMUX0..15,fandMUX0..15) <-- outFINTERM0..15
-		Nand(a=fandMUX0,b=fandMUX0,out=unusualA0);
-		Nand(a=sandMUX0,b=sandMUX0,out=unusualB0);
-		Nand(a=unusualA0,b=unusualB0,out=outFINTERM0);
+	//Or16(sandMUX0..15,fandMUX0..15) <-- outFINTERM0..15
+	Nand(a=fandMUX0,b=fandMUX0,out=unusualA0);
+	Nand(a=sandMUX0,b=sandMUX0,out=unusualB0);
+	Nand(a=unusualA0,b=unusualB0,out=outFINTERM0);
 		
-		Nand(a=fandMUX1,b=fandMUX1,out=unusualA1);
-		Nand(a=sandMUX1,b=sandMUX1,out=unusualB1);
-		Nand(a=unusualA1,b=unusualB1,out=outFINTERM1);
+	Nand(a=fandMUX1,b=fandMUX1,out=unusualA1);
+	Nand(a=sandMUX1,b=sandMUX1,out=unusualB1);
+	Nand(a=unusualA1,b=unusualB1,out=outFINTERM1);
 		
-		Nand(a=fandMUX2,b=fandMUX2,out=unusualA2);
-		Nand(a=sandMUX2,b=sandMUX2,out=unusualB2);
-		Nand(a=unusualA2,b=unusualB2,out=outFINTERM2);
+	Nand(a=fandMUX2,b=fandMUX2,out=unusualA2);
+	Nand(a=sandMUX2,b=sandMUX2,out=unusualB2);
+	Nand(a=unusualA2,b=unusualB2,out=outFINTERM2);
 		
-		Nand(a=fandMUX3,b=fandMUX3,out=unusualA3);
-		Nand(a=sandMUX3,b=sandMUX3,out=unusualB3);
-		Nand(a=unusualA3,b=unusualB3,out=outFINTERM3);
+	Nand(a=fandMUX3,b=fandMUX3,out=unusualA3);
+	Nand(a=sandMUX3,b=sandMUX3,out=unusualB3);
+	Nand(a=unusualA3,b=unusualB3,out=outFINTERM3);
 		
-		Nand(a=fandMUX4,b=fandMUX4,out=unusualA4);
-		Nand(a=sandMUX4,b=sandMUX4,out=unusualB4);
-		Nand(a=unusualA4,b=unusualB4,out=outFINTERM4);
+	Nand(a=fandMUX4,b=fandMUX4,out=unusualA4);
+	Nand(a=sandMUX4,b=sandMUX4,out=unusualB4);
+	Nand(a=unusualA4,b=unusualB4,out=outFINTERM4);
 		
-		Nand(a=fandMUX5,b=fandMUX5,out=unusualA5);
-		Nand(a=sandMUX5,b=sandMUX5,out=unusualB5);
-		Nand(a=unusualA5,b=unusualB5,out=outFINTERM5);
+	Nand(a=fandMUX5,b=fandMUX5,out=unusualA5);
+	Nand(a=sandMUX5,b=sandMUX5,out=unusualB5);
+	Nand(a=unusualA5,b=unusualB5,out=outFINTERM5);
 		
-		Nand(a=fandMUX6,b=fandMUX6,out=unusualA6);
-		Nand(a=sandMUX6,b=sandMUX6,out=unusualB6);
-		Nand(a=unusualA6,b=unusualB6,out=outFINTERM6);
+	Nand(a=fandMUX6,b=fandMUX6,out=unusualA6);
+	Nand(a=sandMUX6,b=sandMUX6,out=unusualB6);
+	Nand(a=unusualA6,b=unusualB6,out=outFINTERM6);
 		
-		Nand(a=fandMUX7,b=fandMUX7,out=unusualA7);
-		Nand(a=sandMUX7,b=sandMUX7,out=unusualB7);
-		Nand(a=unusualA7,b=unusualB7,out=outFINTERM7);
+	Nand(a=fandMUX7,b=fandMUX7,out=unusualA7);
+	Nand(a=sandMUX7,b=sandMUX7,out=unusualB7);
+	Nand(a=unusualA7,b=unusualB7,out=outFINTERM7);
 		
-		Nand(a=fandMUX8,b=fandMUX8,out=unusualA8);
-		Nand(a=sandMUX8,b=sandMUX8,out=unusualB8);
-		Nand(a=unusualA8,b=unusualB8,out=outFINTERM8);
+	Nand(a=fandMUX8,b=fandMUX8,out=unusualA8);
+	Nand(a=sandMUX8,b=sandMUX8,out=unusualB8);
+	Nand(a=unusualA8,b=unusualB8,out=outFINTERM8);
 		
-		Nand(a=fandMUX9,b=fandMUX9,out=unusualA9);
-		Nand(a=sandMUX9,b=sandMUX9,out=unusualB9);
-		Nand(a=unusualA9,b=unusualB9,out=outFINTERM9);
+	Nand(a=fandMUX9,b=fandMUX9,out=unusualA9);
+	Nand(a=sandMUX9,b=sandMUX9,out=unusualB9);
+	Nand(a=unusualA9,b=unusualB9,out=outFINTERM9);
 		
-		Nand(a=fandMUX10,b=fandMUX10,out=unusualA10);
-		Nand(a=sandMUX10,b=sandMUX10,out=unusualB10);
-		Nand(a=unusualA10,b=unusualB10,out=outFINTERM10);
+	Nand(a=fandMUX10,b=fandMUX10,out=unusualA10);
+	Nand(a=sandMUX10,b=sandMUX10,out=unusualB10);
+	Nand(a=unusualA10,b=unusualB10,out=outFINTERM10);
 		
-		Nand(a=fandMUX11,b=fandMUX11,out=unusualA11);
-		Nand(a=sandMUX11,b=sandMUX11,out=unusualB11);
-		Nand(a=unusualA11,b=unusualB11,out=outFINTERM11);
+	Nand(a=fandMUX11,b=fandMUX11,out=unusualA11);
+	Nand(a=sandMUX11,b=sandMUX11,out=unusualB11);
+	Nand(a=unusualA11,b=unusualB11,out=outFINTERM11);
 		
-		Nand(a=fandMUX12,b=fandMUX12,out=unusualA12);
-		Nand(a=sandMUX12,b=sandMUX12,out=unusualB12);
-		Nand(a=unusualA12,b=unusualB12,out=outFINTERM12);
+	Nand(a=fandMUX12,b=fandMUX12,out=unusualA12);
+	Nand(a=sandMUX12,b=sandMUX12,out=unusualB12);
+	Nand(a=unusualA12,b=unusualB12,out=outFINTERM12);
 		
-		Nand(a=fandMUX13,b=fandMUX13,out=unusualA13);
-		Nand(a=sandMUX13,b=sandMUX13,out=unusualB13);
-		Nand(a=unusualA13,b=unusualB13,out=outFINTERM13);
+	Nand(a=fandMUX13,b=fandMUX13,out=unusualA13);
+	Nand(a=sandMUX13,b=sandMUX13,out=unusualB13);
+	Nand(a=unusualA13,b=unusualB13,out=outFINTERM13);
 		
-		Nand(a=fandMUX14,b=fandMUX14,out=unusualA14);
-		Nand(a=sandMUX14,b=sandMUX14,out=unusualB14);
-		Nand(a=unusualA14,b=unusualB14,out=outFINTERM14);
+	Nand(a=fandMUX14,b=fandMUX14,out=unusualA14);
+	Nand(a=sandMUX14,b=sandMUX14,out=unusualB14);
+	Nand(a=unusualA14,b=unusualB14,out=outFINTERM14);
 		
-		Nand(a=fandMUX15,b=fandMUX15,out=unusualA15);
-		Nand(a=sandMUX15,b=sandMUX15,out=unusualB15);
-		Nand(a=unusualA15,b=unusualB15,out=outFINTERM15);
+	Nand(a=fandMUX15,b=fandMUX15,out=unusualA15);
+	Nand(a=sandMUX15,b=sandMUX15,out=unusualB15);
+	Nand(a=unusualA15,b=unusualB15,out=outFINTERM15);
         
         //NO_BIT
         
         //if (no == 1) then out = !out
     	// MUX Approach:
-		// OutFinal[i] = (~(no).in[i]) + (no . ~(in[i]))
-		// The conditional negation produces TT identical to XOR
+	// OutFinal[i] = (~(no).in[i]) + (no . ~(in[i]))
+	// The conditional negation produces TT identical to XOR
     	//XOR Approach:
-		//OutFinal[i] = in[i] XOR no
+	//OutFinal[i] = in[i] XOR no
         Nand(a=outFINTERM0,b=no,out=feline0);
         Nand(a=outFINTERM0,b=feline0,out=orfelineA0);
         Nand(a=no,b=feline0,out=orfelineB0);
@@ -1004,86 +1006,86 @@ CHIP ALU {
         // ZR_BIT
         
     	//zr -> Not(Or16Way(outFINAL[16]))
-		//zr -> Not(Or16Way(outFINAL[16]))
-		//General ORs
-		Nand(a=outFINAL0,b=outFINAL0,out=strength0);
-		Nand(a=outFINAL1,b=outFINAL1,out=strength1);
-		Nand(a=strength0,b=strength1,out=ORZR01);
+	//zr -> Not(Or16Way(outFINAL[16]))
+	//General ORs
+	Nand(a=outFINAL0,b=outFINAL0,out=strength0);
+	Nand(a=outFINAL1,b=outFINAL1,out=strength1);
+	Nand(a=strength0,b=strength1,out=ORZR01);
 		
-		Nand(a=outFINAL2,b=outFINAL2,out=strength2);
-		Nand(a=outFINAL3,b=outFINAL3,out=strength3);
-		Nand(a=strength2,b=strength3,out=ORZR23);
+	Nand(a=outFINAL2,b=outFINAL2,out=strength2);
+	Nand(a=outFINAL3,b=outFINAL3,out=strength3);
+	Nand(a=strength2,b=strength3,out=ORZR23);
 		
-		Nand(a=outFINAL4,b=outFINAL4,out=strength4);
-		Nand(a=outFINAL5,b=outFINAL5,out=strength5);
-		Nand(a=strength4,b=strength5,out=ORZR45);
+	Nand(a=outFINAL4,b=outFINAL4,out=strength4);
+	Nand(a=outFINAL5,b=outFINAL5,out=strength5);
+	Nand(a=strength4,b=strength5,out=ORZR45);
 		
-		Nand(a=outFINAL6,b=outFINAL6,out=strength6);
-		Nand(a=outFINAL7,b=outFINAL7,out=strength7);
-		Nand(a=strength6,b=strength7,out=ORZR67);
+	Nand(a=outFINAL6,b=outFINAL6,out=strength6);
+	Nand(a=outFINAL7,b=outFINAL7,out=strength7);
+	Nand(a=strength6,b=strength7,out=ORZR67);
 		
-		Nand(a=outFINAL8,b=outFINAL8,out=strength8);
-		Nand(a=outFINAL9,b=outFINAL9,out=strength9);
-		Nand(a=strength8,b=strength9,out=ORZR89);
+	Nand(a=outFINAL8,b=outFINAL8,out=strength8);
+	Nand(a=outFINAL9,b=outFINAL9,out=strength9);
+	Nand(a=strength8,b=strength9,out=ORZR89);
 		
-		Nand(a=outFINAL10,b=outFINAL10,out=strength10);
-		Nand(a=outFINAL11,b=outFINAL11,out=strength11);
-		Nand(a=strength10,b=strength11,out=ORZR1011);
+	Nand(a=outFINAL10,b=outFINAL10,out=strength10);
+	Nand(a=outFINAL11,b=outFINAL11,out=strength11);
+	Nand(a=strength10,b=strength11,out=ORZR1011);
 		
-		Nand(a=outFINAL12,b=outFINAL12,out=strength12);
-		Nand(a=outFINAL13,b=outFINAL13,out=strength13);
-		Nand(a=strength12,b=strength13,out=ORZR1213);
+	Nand(a=outFINAL12,b=outFINAL12,out=strength12);
+	Nand(a=outFINAL13,b=outFINAL13,out=strength13);
+	Nand(a=strength12,b=strength13,out=ORZR1213);
 
-		Nand(a=outFINAL14,b=outFINAL14,out=strength14);
-		Nand(a=outFINAL15,b=outFINAL15,out=strength15);
-		Nand(a=strength14,b=strength15,out=ORZR1415);
+	Nand(a=outFINAL14,b=outFINAL14,out=strength14);
+	Nand(a=outFINAL15,b=outFINAL15,out=strength15);
+	Nand(a=strength14,b=strength15,out=ORZR1415);
 
-		//Intermediate ORs
-		Nand(a=ORZR01,b=ORZR01,out=work01);
-		Nand(a=ORZR23,b=ORZR23,out=work23);
-		Nand(a=work01,b=work23,out=INTERMOR0123);
+	//Intermediate ORs
+	Nand(a=ORZR01,b=ORZR01,out=work01);
+	Nand(a=ORZR23,b=ORZR23,out=work23);
+	Nand(a=work01,b=work23,out=INTERMOR0123);
 		
-		Nand(a=ORZR45,b=ORZR45,out=work45);
-		Nand(a=ORZR67,b=ORZR67,out=work67);
-		Nand(a=work45,b=work67,out=INTERMOR4567);
+	Nand(a=ORZR45,b=ORZR45,out=work45);
+	Nand(a=ORZR67,b=ORZR67,out=work67);
+	Nand(a=work45,b=work67,out=INTERMOR4567);
 		
-		Nand(a=ORZR89,b=ORZR89,out=work89);
-		Nand(a=ORZR1011,b=ORZR1011,out=work1011);
-		Nand(a=work89,b=work1011,out=INTERMOR891011);
+	Nand(a=ORZR89,b=ORZR89,out=work89);
+	Nand(a=ORZR1011,b=ORZR1011,out=work1011);
+	Nand(a=work89,b=work1011,out=INTERMOR891011);
 		
-		Nand(a=ORZR1213,b=ORZR1213,out=work1213);
-		Nand(a=ORZR1415,b=ORZR1415,out=work1415);
-		Nand(a=work1213,b=work1415,out=INTERMOR12131415);
+	Nand(a=ORZR1213,b=ORZR1213,out=work1213);
+	Nand(a=ORZR1415,b=ORZR1415,out=work1415);
+	Nand(a=work1213,b=work1415,out=INTERMOR12131415);
 
-		//Tapering ORs
-		Nand(a=INTERMOR0123,b=INTERMOR0123,out=head0123);
-		Nand(a=INTERMOR4567,b=INTERMOR4567,out=head4567);
-		Nand(a=head0123,b=head4567,out=INTERINTER1);
+	//Tapering ORs
+	Nand(a=INTERMOR0123,b=INTERMOR0123,out=head0123);
+	Nand(a=INTERMOR4567,b=INTERMOR4567,out=head4567);
+	Nand(a=head0123,b=head4567,out=INTERINTER1);
 		
-		Nand(a=INTERMOR891011,b=INTERMOR891011,out=head891011);
-		Nand(a=INTERMOR12131415,b=INTERMOR12131415,out=head12131415);
-		Nand(a=head891011,b=head12131415,out=INTERINTER2);
+	Nand(a=INTERMOR891011,b=INTERMOR891011,out=head891011);
+	Nand(a=INTERMOR12131415,b=INTERMOR12131415,out=head12131415);
+	Nand(a=head891011,b=head12131415,out=INTERINTER2);
 
-		//Final Or
-		Nand(a=INTERINTER1,b=INTERINTER1,out=notINTER1);
-		Nand(a=INTERINTER2,b=INTERINTER2,out=notINTER2);
-		Nand(a=notINTER1,b=notINTER2,out=ORZR);
+	//Final Or
+	Nand(a=INTERINTER1,b=INTERINTER1,out=notINTER1);
+	Nand(a=INTERINTER2,b=INTERINTER2,out=notINTER2);
+	Nand(a=notINTER1,b=notINTER2,out=ORZR);
 
-		//Negation
-		Nand(a=ORZR,b=ORZR,out=zr);
+	//Negation
+	Nand(a=ORZR,b=ORZR,out=zr);
 		
-		// NG_BIT
+	// NG_BIT
+	
+	//if out[16] == 1, number is negative, so ng = 1
+	//if out[16] == 0, number is positive, so ng = 0
+	//As NG depends on the MSB (the signal bit), it
+	//simply receives the value of the MSB.
 		
-		//if out[16] == 1, number is negative, so ng = 1
-		//if out[16] == 0, number is positive, so ng = 0
-		//As NG depends on the MSB (the signal bit), it
-		//simply receives the value of the MSB.
-		
-		Nand(a=outFINAL15,b=true,out=nandng);
-		Nand(a=nandng,b=nandng,out=ng);
+	Nand(a=outFINAL15,b=true,out=nandng);
+	Nand(a=nandng,b=nandng,out=ng);
 		
 //---------------------------------------------------------------------
-		//16_BIT OUTPUT(UNADULTERATED)
+	//16_BIT OUTPUT(UNADULTERATED)
         Nand(a=outFINAL0,b=true,out=nandfinal0);
         Nand(a=nandfinal0,b=nandfinal0,out=out[0]);
         

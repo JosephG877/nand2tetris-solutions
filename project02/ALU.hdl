@@ -1,0 +1,1150 @@
+CHIP ALU {
+    IN  
+        x[16], y[16],  // 16-bit inputs        
+        zx, // zero the x input?
+        nx, // negate the x input?
+        zy, // zero the y input?
+        ny, // negate the y input?
+        f,  // compute (out = x + y) or (out = x & y)?
+        no; // negate the out output?
+    OUT 
+        out[16], // 16-bit output
+        zr,      // if (out == 0) equals 1, else 0
+        ng;      // if (out < 0)  equals 1, else 0
+
+    PARTS:
+    	
+    	// ZX_BIT
+    	
+    	//if (zx == 1) sets x = 0 
+    	//Negate ZX
+    	Nand(a=zx,b=zx,out=notZX);
+        
+        //And x, notZX
+    	Nand(a=x[0],b=notZX,out=babel0);
+    	Nand(a=babel0,b=babel0,out=outZX0);
+    	
+    	Nand(a=x[1],b=notZX,out=babel1);
+    	Nand(a=babel1,b=babel1,out=outZX1);
+    	
+    	Nand(a=x[2],b=notZX,out=babel2);
+    	Nand(a=babel2,b=babel3,out=outZX2);
+    	
+    	Nand(a=x[3],b=notZX,out=babel3);
+    	Nand(a=babel3,b=babel3,out=outZX3);
+    	
+    	Nand(a=x[4],b=notZX,out=babel4);
+    	Nand(a=babel4,b=babel4,out=outZX4);
+    	
+    	Nand(a=x[5],b=notZX,out=babel5);
+    	Nand(a=babel5,b=babel5,out=outZX5);
+    	    	
+    	Nand(a=x[6],b=notZX,out=babel6);
+    	Nand(a=babel6,b=babel6,out=outZX6);
+    	
+    	Nand(a=x[7],b=notZX,out=babel7);
+    	Nand(a=babel7,b=babel7,out=outZX7);    	
+    	
+    	Nand(a=x[8],b=notZX,out=babel8);
+    	Nand(a=babel8,b=babel8,out=outZX8);
+    	
+    	Nand(a=x[9],b=notZX,out=babel9);
+    	Nand(a=babel9,b=babel9,out=outZX9);
+    	
+    	Nand(a=x[10],b=notZX,out=babel10);
+    	Nand(a=babel10,b=babel10,out=outZX10);
+
+    	Nand(a=x[11],b=notZX,out=babel11);
+    	Nand(a=babel11,b=babel11,out=outZX11);
+    	    	
+    	Nand(a=x[12],b=notZX,out=babel12);
+    	Nand(a=babel12,b=babel12,out=outZX12);
+
+    	Nand(a=x[13],b=notZX,out=babel13);
+    	Nand(a=babel13,b=babel13,out=outZX13);
+
+    	Nand(a=x[14],b=notZX,out=babel14);
+    	Nand(a=babel14,b=babel14,out=outZX14);
+    	
+    	Nand(a=x[15],b=notZX,out=babel15);
+    	Nand(a=babel15,b=babel15,out=outZX15);
+
+		// NX_BIT
+
+    	// if (nx == 1) sets x = !x 
+    	Nand(a=outZX0,b=nx,out=kraken0);
+    	Nand(a=outZX0,b=kraken0,out=orNXA0);
+    	Nand(a=nx,b=kraken0,out=orNXB0);
+    	Nand(a=orNXA0,b=orNXB0,out=outNX0);
+    	
+    	Nand(a=outZX1,b=nx,out=kraken1);
+    	Nand(a=outZX1,b=kraken1,out=orNXA1);
+    	Nand(a=nx,b=kraken1,out=orNXB1);
+    	Nand(a=orNXA1,b=orNXB1,out=outNX1);    	
+    	
+    	Nand(a=outZX2,b=nx,out=kraken2);
+    	Nand(a=outZX2,b=kraken2,out=orNXA2);
+    	Nand(a=nx,b=kraken2,out=orNXB2);
+    	Nand(a=orNXA2,b=orNXB2,out=outNX2);
+    	
+    	Nand(a=outZX3,b=nx,out=kraken3);
+    	Nand(a=outZX3,b=kraken3,out=orNXA3);
+    	Nand(a=nx,b=kraken3,out=orNXB3);
+    	Nand(a=orNXA3,b=orNXB3,out=outNX3);
+    	
+    	Nand(a=outZX4,b=nx,out=kraken4);
+    	Nand(a=outZX4,b=kraken4,out=orNXA4);
+    	Nand(a=nx,b=kraken4,out=orNXB4);
+    	Nand(a=orNXA4,b=orNXB4,out=outNX4);
+    	
+    	Nand(a=outZX5,b=nx,out=kraken5);
+    	Nand(a=outZX5,b=kraken5,out=orNXA5);
+    	Nand(a=nx,b=kraken5,out=orNXB5);
+    	Nand(a=orNXA5,b=orNXB5,out=outNX5);
+   
+    	Nand(a=outZX6,b=nx,out=kraken6);
+    	Nand(a=outZX6,b=kraken6,out=orNXA6);
+    	Nand(a=nx,b=kraken6,out=orNXB6);
+    	Nand(a=orNXA6,b=orNXB6,out=outNX6);
+    	
+    	Nand(a=outZX7,b=nx,out=kraken7);
+    	Nand(a=outZX7,b=kraken7,out=orNXA7);
+    	Nand(a=nx,b=kraken7,out=orNXB7);
+    	Nand(a=orNXA7,b=orNXB7,out=outNX7);
+    	
+    	Nand(a=outZX8,b=nx,out=kraken8);
+    	Nand(a=outZX8,b=kraken8,out=orNXA8);
+    	Nand(a=nx,b=kraken8,out=orNXB8);
+    	Nand(a=orNXA8,b=orNXB8,out=outNX8);
+    	
+    	Nand(a=outZX9,b=nx,out=kraken9);
+    	Nand(a=outZX9,b=kraken9,out=orNXA9);
+    	Nand(a=nx,b=kraken9,out=orNXB9);
+    	Nand(a=orNXA9,b=orNXB9,out=outNX9);
+    	
+    	Nand(a=outZX10,b=nx,out=kraken10);
+    	Nand(a=outZX10,b=kraken10,out=orNXA10);
+    	Nand(a=nx,b=kraken10,out=orNXB10);
+    	Nand(a=orNXA10,b=orNXB10,out=outNX10);
+    	
+    	Nand(a=outZX11,b=nx,out=kraken11);
+    	Nand(a=outZX11,b=kraken11,out=orNXA11);
+    	Nand(a=nx,b=kraken11,out=orNXB11);
+    	Nand(a=orNXA11,b=orNXB11,out=outNX11);
+    	
+    	Nand(a=outZX12,b=nx,out=kraken12);
+    	Nand(a=outZX12,b=kraken12,out=orNXA12);
+    	Nand(a=nx,b=kraken12,out=orNXB12);
+    	Nand(a=orNXA12,b=orNXB12,out=outNX12);
+    	
+    	Nand(a=outZX13,b=nx,out=kraken13);
+    	Nand(a=outZX13,b=kraken13,out=orNXA13);
+    	Nand(a=nx,b=kraken13,out=orNXB13);
+    	Nand(a=orNXA13,b=orNXB13,out=outNX13);
+    	
+    	Nand(a=outZX14,b=nx,out=kraken14);
+    	Nand(a=outZX14,b=kraken14,out=orNXA14);
+    	Nand(a=nx,b=kraken14,out=orNXB14);
+    	Nand(a=orNXA14,b=orNXB14,out=outNX14);
+    	
+    	Nand(a=outZX15,b=nx,out=kraken15);
+    	Nand(a=outZX15,b=kraken15,out=orNXA15);
+    	Nand(a=nx,b=kraken15,out=orNXB15);
+    	Nand(a=orNXA15,b=orNXB15,out=outNX15);
+
+		// ZY_BIT
+
+	    // if (zy == 1) sets y = 0
+	    //Negate ZY
+	    Nand(a=zy,b=zy,out=notZY);
+	    //And XY,Not ZY
+    	Nand(a=y[0],b=notZY,out=lynch0);
+    	Nand(a=lynch0,b=lynch0,out=outZY0);
+    	
+    	Nand(a=y[1],b=notZY,out=lynch1);
+    	Nand(a=lynch1,b=lynch1,out=outZY1);
+   
+    	Nand(a=y[2],b=notZY,out=lynch2);
+    	Nand(a=lynch2,b=lynch2,out=outZY2);
+    	
+    	Nand(a=y[3],b=notZY,out=lynch3);
+    	Nand(a=lynch3,b=lynch3,out=outZY3);
+    	
+    	Nand(a=y[4],b=notZY,out=lynch4);
+    	Nand(a=lynch4,b=lynch4,out=outZY4);
+    	
+    	Nand(a=y[5],b=notZY,out=lynch5);
+    	Nand(a=lynch5,b=lynch5,out=outZY5);
+    	
+    	Nand(a=y[6],b=notZY,out=lynch6);
+    	Nand(a=lynch6,b=lynch6,out=outZY6);
+    	
+    	Nand(a=y[7],b=notZY,out=lynch7);
+    	Nand(a=lynch7,b=lynch7,out=outZY7);
+    	
+    	Nand(a=y[8],b=notZY,out=lynch8);
+    	Nand(a=lynch8,b=lynch8,out=outZY8);
+    	
+    	Nand(a=y[9],b=notZY,out=lynch9);
+    	Nand(a=lynch9,b=lynch9,out=outZY9);
+    	
+    	Nand(a=y[10],b=notZY,out=lynch10);
+    	Nand(a=lynch10,b=lynch10,out=outZY10);
+    	
+    	Nand(a=y[11],b=notZY,out=lynch11);
+    	Nand(a=lynch11,b=lynch11,out=outZY11);
+    	
+    	Nand(a=y[12],b=notZY,out=lynch12);
+    	Nand(a=lynch12,b=lynch12,out=outZY12);
+    	
+    	Nand(a=y[13],b=notZY,out=lynch13);
+    	Nand(a=lynch13,b=lynch13,out=outZY13);
+    	
+    	Nand(a=y[14],b=notZY,out=lynch14);
+    	Nand(a=lynch14,b=lynch14,out=outZY14);
+    	
+    	Nand(a=y[15],b=notZY,out=lynch15);
+    	Nand(a=lynch15,b=lynch15,out=outZY15);
+
+    	// NY_BIT
+    	
+    	// if (ny == 1) sets y = !y     
+    	Nand(a=outZY0,b=ny,out=fwwm0);
+    	Nand(a=outZY0,b=fwwm0,out=orZYA0);
+    	Nand(a=ny,b=fwwm0,out=orZYB0);
+    	Nand(a=orZYA0,b=orZYB0,out=outNY0);
+    	
+    	Nand(a=outZY1,b=ny,out=fwwm1);
+    	Nand(a=outZY1,b=fwwm1,out=orZYA1);
+    	Nand(a=ny,b=fwwm1,out=orZYB1);
+    	Nand(a=orZYA1,b=orZYB1,out=outNY1);
+    	
+    	Nand(a=outZY2,b=ny,out=fwwm2);
+    	Nand(a=outZY2,b=fwwm2,out=orZYA2);
+    	Nand(a=ny,b=fwwm2,out=orZYB2);
+    	Nand(a=orZYA2,b=orZYB2,out=outNY2);
+    	
+    	Nand(a=outZY3,b=ny,out=fwwm3);
+    	Nand(a=outZY3,b=fwwm3,out=orZYA3);
+    	Nand(a=ny,b=fwwm3,out=orZYB3);
+    	Nand(a=orZYA3,b=orZYB3,out=outNY3);
+    	    	
+    	Nand(a=outZY4,b=ny,out=fwwm4);
+    	Nand(a=outZY4,b=fwwm4,out=orZYA4);
+    	Nand(a=ny,b=fwwm4,out=orZYB4);
+    	Nand(a=orZYA4,b=orZYB4,out=outNY4);
+    	
+    	Nand(a=outZY5,b=ny,out=fwwm5);
+    	Nand(a=outZY5,b=fwwm5,out=orZYA5);
+    	Nand(a=ny,b=fwwm5,out=orZYB5);
+    	Nand(a=orZYA5,b=orZYB5,out=outNY5);    	
+    	
+    	Nand(a=outZY6,b=ny,out=fwwm6);
+    	Nand(a=outZY6,b=fwwm6,out=orZYA6);
+    	Nand(a=ny,b=fwwm6,out=orZYB6);
+    	Nand(a=orZYA6,b=orZYB6,out=outNY6);
+    	
+    	Nand(a=outZY7,b=ny,out=fwwm7);
+    	Nand(a=outZY7,b=fwwm7,out=orZYA7);
+    	Nand(a=ny,b=fwwm7,out=orZYB7);
+    	Nand(a=orZYA7,b=orZYB7,out=outNY7);
+    	
+    	Nand(a=outZY8,b=ny,out=fwwm8);
+    	Nand(a=outZY8,b=fwwm8,out=orZYA8);
+    	Nand(a=ny,b=fwwm8,out=orZYB8);
+    	Nand(a=orZYA8,b=orZYB8,out=outNY8);
+    	
+    	Nand(a=outZY9,b=ny,out=fwwm9);
+    	Nand(a=outZY9,b=fwwm9,out=orZYA9);
+    	Nand(a=ny,b=fwwm9,out=orZYB9);
+    	Nand(a=orZYA9,b=orZYB9,out=outNY9);
+    	
+    	Nand(a=outZY10,b=ny,out=fwwm10);
+    	Nand(a=outZY10,b=fwwm10,out=orZYA10);
+    	Nand(a=ny,b=fwwm10,out=orZYB10);
+    	Nand(a=orZYA10,b=orZYB10,out=outNY10);
+    	
+    	Nand(a=outZY11,b=ny,out=fwwm11);
+    	Nand(a=outZY11,b=fwwm11,out=orZYA11);
+    	Nand(a=ny,b=fwwm11,out=orZYB11);
+    	Nand(a=orZYA11,b=orZYB11,out=outNY11);
+    	
+    	Nand(a=outZY12,b=ny,out=fwwm12);
+    	Nand(a=outZY12,b=fwwm12,out=orZYA12);
+    	Nand(a=ny,b=fwwm12,out=orZYB12);
+    	Nand(a=orZYA12,b=orZYB12,out=outNY12); 	
+    	
+    	Nand(a=outZY13,b=ny,out=fwwm13);
+    	Nand(a=outZY13,b=fwwm13,out=orZYA13);
+    	Nand(a=ny,b=fwwm13,out=orZYB13);
+    	Nand(a=orZYA13,b=orZYB13,out=outNY13);
+    	
+    	Nand(a=outZY14,b=ny,out=fwwm14);
+    	Nand(a=outZY14,b=fwwm14,out=orZYA14);
+    	Nand(a=ny,b=fwwm14,out=orZYB14);
+    	Nand(a=orZYA14,b=orZYB14,out=outNY14);
+	    
+    	Nand(a=outZY15,b=ny,out=fwwm15);
+    	Nand(a=outZY15,b=fwwm15,out=orZYA15);
+    	Nand(a=ny,b=fwwm15,out=orZYB15);
+    	Nand(a=orZYA15,b=orZYB15,out=outNY15);
+		
+		// F_BIT
+		
+    	// if (f == 1)  sets out = x + y
+    	// if (f == 0)  sets out = x & y
+    	
+		//	---GENERAL EXPRESSION---
+		//OUT = (x . y) . (~f) + (FullAdder(x,y)) . f
+
+		//notF = (f | f)
+		Nand(a=f,b=f,out=notF);
+		
+		//andXY1..15 = (x[1..15] . y[1..15])
+		Nand(a=outNX0,b=outNY0,out=lodge0);
+		Nand(a=lodge0,b=lodge0,out=andXY0);
+		
+		Nand(a=outNX1,b=outNY1,out=lodge1);
+		Nand(a=lodge1,b=lodge1,out=andXY1);
+		
+		Nand(a=outNX2,b=outNY2,out=lodge2);
+		Nand(a=lodge2,b=lodge2,out=andXY2);
+		
+		Nand(a=outNX3,b=outNY3,out=lodge3);
+		Nand(a=lodge3,b=lodge3,out=andXY3);
+		
+		Nand(a=outNX4,b=outNY4,out=lodge4);
+		Nand(a=lodge4,b=lodge4,out=andXY4);
+		
+		Nand(a=outNX5,b=outNY5,out=lodge5);
+		Nand(a=lodge5,b=lodge5,out=andXY5);
+		
+		Nand(a=outNX6,b=outNY6,out=lodge6);
+		Nand(a=lodge6,b=lodge6,out=andXY6);
+		
+		Nand(a=outNX7,b=outNY7,out=lodge7);
+		Nand(a=lodge7,b=lodge7,out=andXY7);
+		
+		Nand(a=outNX8,b=outNY8,out=lodge8);
+		Nand(a=lodge8,b=lodge8,out=andXY8);
+		
+		Nand(a=outNX9,b=outNY9,out=lodge9);
+		Nand(a=lodge9,b=lodge9,out=andXY9);
+		
+		Nand(a=outNX10,b=outNY10,out=lodge10);
+		Nand(a=lodge10,b=lodge10,out=andXY10);
+		
+		Nand(a=outNX11,b=outNY11,out=lodge11);
+		Nand(a=lodge11,b=lodge11,out=andXY11);
+		
+		Nand(a=outNX12,b=outNY12,out=lodge12);
+		Nand(a=lodge12,b=lodge12,out=andXY12);
+		
+		Nand(a=outNX13,b=outNY13,out=lodge13);
+		Nand(a=lodge13,b=lodge13,out=andXY13);
+		
+		Nand(a=outNX14,b=outNY14,out=lodge14);
+		Nand(a=lodge14,b=lodge14,out=andXY14);
+		
+		Nand(a=outNX15,b=outNY15,out=lodge15);
+		Nand(a=lodge15,b=lodge15,out=andXY15);
+
+        //FullAdder
+		//-> BIT_0 <LSB>
+		//SUM_0 = x[0] XOR y[0];
+		//CAR_0 = x[0] . y[0];
+		Nand(a=outNX0,b=outNY0,out=erhead0);
+		Nand(a=outNX0,b=erhead0,out=orFMA0);
+		Nand(a=outNY0,b=erhead0,out=orFMB0);
+		Nand(a=orFMA0,b=orFMB0,out=FULLMUX0);
+		
+    	Nand(a=outNX0,b=outNY0,out=engrave0);
+    	Nand(a=engrave0,b=engrave0,out=carry0);
+
+		//		-> BITS_1..15
+		//SUM_1..15 = (x[1..15] XOR y[1..15]) XOR cin[0..15];
+		//CAR_1..15 = (x[1..15].y[1..15])+(y[1..15].cin[0..15])+(x[1..15].cin[0..15])
+		
+		//SUM: BIT_1
+        Nand(a=outNX1,b=outNY1,out=scranton1);
+        Nand(a=outNX1,b=scranton1,out=orNXYA1);
+        Nand(a=outNY1,b=scranton1,out=orNXYB1);
+        Nand(a=orNXYA1,b=orNXYB1,out=xorXY1);
+        
+        Nand(a=xorXY1,b=carry0,out=sylvan1);
+        Nand(a=xorXY1,b=sylvan1,out=orXXYA1);
+        Nand(a=carry0,b=sylvan1,out=orXXYB1);
+        Nand(a=orXXYA1,b=orXXYB1,out=FULLMUX1);
+        
+        //CARRY: BIT_1
+        Nand(a=outNY1,b=carry0,out=yokel1);
+        Nand(a=yokel1,b=yokel1,out=andYCIN1);
+        
+        Nand(a=outNX1,b=carry0,out=nasfx1);
+        Nand(a=nasfx1,b=nasfx1,out=andXCIN1);
+        
+        Nand(a=andXY1,b=andXY1,out=flawlessA1);
+        Nand(a=andYCIN1,b=andYCIN1,out=flawlessB1);
+        Nand(a=flawlessA1,b=flawlessB1,out=intercarry1);
+        
+        Nand(a=intercarry1,b=intercarry1,out=wormA1);
+        Nand(a=andXCIN1,b=andXCIN1,out=wormB1);
+        Nand(a=wormA1,b=wormB1,out=carry1);
+
+		//SUM: BIT_2
+        Nand(a=outNX2,b=outNY2,out=scranton2);
+        Nand(a=outNX2,b=scranton2,out=orNXYA2);
+        Nand(a=outNY2,b=scranton2,out=orNXYB2);
+        Nand(a=orNXYA2,b=orNXYB2,out=xorXY2);
+        
+        Nand(a=xorXY2,b=carry1,out=sylvan2);
+        Nand(a=xorXY2,b=sylvan2,out=orXXYA2);
+        Nand(a=carry1,b=sylvan2,out=orXXYB2);
+        Nand(a=orXXYA2,b=orXXYB2,out=FULLMUX2);
+        
+        
+        //CARRY: BIT_2
+        Nand(a=outNY2,b=carry1,out=yokel2);
+        Nand(a=yokel2,b=yokel2,out=andYCIN2);
+        
+        Nand(a=outNX2,b=carry1,out=nasfx2);
+        Nand(a=nasfx2,b=nasfx2,out=andXCIN2);
+        
+        Nand(a=andXY2,b=andXY2,out=flawlessA2);
+        Nand(a=andYCIN2,b=andYCIN2,out=flawlessB2);
+        Nand(a=flawlessA2,b=flawlessB2,out=intercarry2);
+        
+        Nand(a=intercarry2,b=intercarry2,out=wormA2);
+        Nand(a=andXCIN2,b=andXCIN2,out=wormB2);
+        Nand(a=wormA2,b=wormB2,out=carry2);
+
+		//SUM: BIT_3
+        Nand(a=outNX3,b=outNY3,out=scranton3);
+        Nand(a=outNX3,b=scranton3,out=orNXYA3);
+        Nand(a=outNY3,b=scranton3,out=orNXYB3);
+        Nand(a=orNXYA3,b=orNXYB3,out=xorXY3);
+        
+        Nand(a=xorXY3,b=carry2,out=sylvan3);
+        Nand(a=xorXY3,b=sylvan3,out=orXXYA3);
+        Nand(a=carry2,b=sylvan3,out=orXXYB3);
+        Nand(a=orXXYA3,b=orXXYB3,out=FULLMUX3);
+        
+        
+        //CARRY: BIT_3
+        Nand(a=outNY3,b=carry2,out=yokel3);
+        Nand(a=yokel3,b=yokel3,out=andYCIN3);
+        
+        Nand(a=outNX3,b=carry2,out=nasfx3);
+        Nand(a=nasfx3,b=nasfx3,out=andXCIN3);
+        
+        Nand(a=andXY3,b=andXY3,out=flawlessA3);
+        Nand(a=andYCIN3,b=andYCIN3,out=flawlessB3);
+        Nand(a=flawlessA3,b=flawlessB3,out=intercarry3);
+        
+        Nand(a=intercarry3,b=intercarry3,out=wormA3);
+        Nand(a=andXCIN3,b=andXCIN3,out=wormB3);
+        Nand(a=wormA3,b=wormB3,out=carry3);
+
+		//SUM: BIT_4
+        Nand(a=outNX4,b=outNY4,out=scranton4);
+        Nand(a=outNX4,b=scranton4,out=orNXYA4);
+        Nand(a=outNY4,b=scranton4,out=orNXYB4);
+        Nand(a=orNXYA4,b=orNXYB4,out=xorXY4);
+        
+        Nand(a=xorXY4,b=carry3,out=sylvan4);
+        Nand(a=xorXY4,b=sylvan4,out=orXXYA4);
+        Nand(a=carry3,b=sylvan4,out=orXXYB4);
+        Nand(a=orXXYA4,b=orXXYB4,out=FULLMUX4);
+        
+        //CARRY: BIT_4
+        Nand(a=outNY4,b=carry3,out=yokel4);
+        Nand(a=yokel4,b=yokel4,out=andYCIN4);
+        
+        Nand(a=outNX4,b=carry3,out=nasfx4);
+        Nand(a=nasfx4,b=nasfx4,out=andXCIN4);
+        
+        Nand(a=andXY4,b=andXY4,out=flawlessA4);
+        Nand(a=andYCIN4,b=andYCIN4,out=flawlessB4);
+        Nand(a=flawlessA4,b=flawlessB4,out=intercarry4);
+        
+        Nand(a=intercarry4,b=intercarry4,out=wormA4);
+        Nand(a=andXCIN4,b=andXCIN4,out=wormB4);
+        Nand(a=wormA4,b=wormB4,out=carry4);
+        
+		//SUM: BIT_5
+        Nand(a=outNX5,b=outNY5,out=scranton5);
+        Nand(a=outNX5,b=scranton5,out=orNXYA5);
+        Nand(a=outNY5,b=scranton5,out=orNXYB5);
+        Nand(a=orNXYA5,b=orNXYB5,out=xorXY5);
+        
+        Nand(a=xorXY5,b=carry4,out=sylvan5);
+        Nand(a=xorXY5,b=sylvan5,out=orXXYA5);
+        Nand(a=carry4,b=sylvan5,out=orXXYB5);
+        Nand(a=orXXYA5,b=orXXYB5,out=FULLMUX5);
+
+        //CARRY: BIT_5
+        Nand(a=outNY5,b=carry4,out=yokel5);
+        Nand(a=yokel5,b=yokel5,out=andYCIN5);
+        
+        Nand(a=outNX5,b=carry4,out=nasfx5);
+        Nand(a=nasfx5,b=nasfx5,out=andXCIN5);
+        
+        Nand(a=andXY5,b=andXY5,out=flawlessA5);
+        Nand(a=andYCIN5,b=andYCIN5,out=flawlessB5);
+        Nand(a=flawlessA5,b=flawlessB5,out=intercarry5);
+        
+        Nand(a=intercarry5,b=intercarry5,out=wormA5);
+        Nand(a=andXCIN5,b=andXCIN5,out=wormB5);
+        Nand(a=wormA5,b=wormB5,out=carry5);
+
+		//SUM: BIT_6
+        Nand(a=outNX6,b=outNY6,out=scranton6);
+        Nand(a=outNX6,b=scranton6,out=orNXYA6);
+        Nand(a=outNY6,b=scranton6,out=orNXYB6);
+        Nand(a=orNXYA6,b=orNXYB6,out=xorXY6);
+        
+        Nand(a=xorXY6,b=carry5,out=sylvan6);
+        Nand(a=xorXY6,b=sylvan6,out=orXXYA6);
+        Nand(a=carry5,b=sylvan6,out=orXXYB6);
+        Nand(a=orXXYA6,b=orXXYB6,out=FULLMUX6);
+        
+        //CARRY: BIT_6
+        Nand(a=outNY6,b=carry5,out=yokel6);
+        Nand(a=yokel6,b=yokel6,out=andYCIN6);
+        
+        Nand(a=outNX6,b=carry5,out=nasfx6);
+        Nand(a=nasfx6,b=nasfx6,out=andXCIN6);
+        
+        Nand(a=andXY6,b=andXY6,out=flawlessA6);
+        Nand(a=andYCIN6,b=andYCIN6,out=flawlessB6);
+        Nand(a=flawlessA6,b=flawlessB6,out=intercarry6);
+        
+        Nand(a=intercarry6,b=intercarry6,out=wormA6);
+        Nand(a=andXCIN6,b=andXCIN6,out=wormB6);
+        Nand(a=wormA6,b=wormB6,out=carry6);
+
+		//SUM: BIT_7
+        Nand(a=outNX7,b=outNY7,out=scranton7);
+        Nand(a=outNX7,b=scranton7,out=orNXYA7);
+        Nand(a=outNY7,b=scranton7,out=orNXYB7);
+        Nand(a=orNXYA7,b=orNXYB7,out=xorXY7);
+        
+        Nand(a=xorXY7,b=carry6,out=sylvan7);
+        Nand(a=xorXY7,b=sylvan7,out=orXXYA7);
+        Nand(a=carry6,b=sylvan7,out=orXXYB7);
+        Nand(a=orXXYA7,b=orXXYB7,out=FULLMUX7);
+   
+        //CARRY: BIT_7
+        Nand(a=outNY7,b=carry6,out=yokel7);
+        Nand(a=yokel7,b=yokel7,out=andYCIN7);
+        
+        Nand(a=outNX7,b=carry6,out=nasfx7);
+        Nand(a=nasfx7,b=nasfx7,out=andXCIN7);
+        
+        Nand(a=andXY7,b=andXY7,out=flawlessA7);
+        Nand(a=andYCIN7,b=andYCIN7,out=flawlessB7);
+        Nand(a=flawlessA7,b=flawlessB7,out=intercarry7);
+        
+        Nand(a=intercarry7,b=intercarry7,out=wormA7);
+        Nand(a=andXCIN7,b=andXCIN7,out=wormB7);
+        Nand(a=wormA7,b=wormB7,out=carry7);
+
+		//SUM: BIT_8
+        Nand(a=outNX8,b=outNY8,out=scranton8);
+        Nand(a=outNX8,b=scranton8,out=orNXYA8);
+        Nand(a=outNY8,b=scranton8,out=orNXYB8);
+        Nand(a=orNXYA8,b=orNXYB8,out=xorXY8);
+        
+        Nand(a=xorXY8,b=carry7,out=sylvan8);
+        Nand(a=xorXY8,b=sylvan8,out=orXXYA8);
+        Nand(a=carry7,b=sylvan8,out=orXXYB8);
+        Nand(a=orXXYA8,b=orXXYB8,out=FULLMUX8);
+  
+        //CARRY: BIT_8
+        Nand(a=outNY8,b=carry7,out=yokel8);
+        Nand(a=yokel8,b=yokel8,out=andYCIN8);
+        
+        Nand(a=outNX8,b=carry7,out=nasfx8);
+        Nand(a=nasfx8,b=nasfx8,out=andXCIN8);
+        
+        Nand(a=andXY8,b=andXY8,out=flawlessA8);
+        Nand(a=andYCIN8,b=andYCIN8,out=flawlessB8);
+        Nand(a=flawlessA8,b=flawlessB8,out=intercarry8);
+        
+        Nand(a=intercarry8,b=intercarry8,out=wormA8);
+        Nand(a=andXCIN8,b=andXCIN8,out=wormB8);
+        Nand(a=wormA8,b=wormB8,out=carry8);
+
+		//SUM: BIT_9
+        Nand(a=outNX9,b=outNY9,out=scranton9);
+        Nand(a=outNX9,b=scranton9,out=orNXYA9);
+        Nand(a=outNY9,b=scranton9,out=orNXYB9);
+        Nand(a=orNXYA9,b=orNXYB9,out=xorXY9);
+        
+        Nand(a=xorXY9,b=carry8,out=sylvan9);
+        Nand(a=xorXY9,b=sylvan9,out=orXXYA9);
+        Nand(a=carry8,b=sylvan9,out=orXXYB9);
+        Nand(a=orXXYA9,b=orXXYB9,out=FULLMUX9);
+        
+        
+        //CARRY: BIT_9
+        Nand(a=outNY9,b=carry8,out=yokel9);
+        Nand(a=yokel9,b=yokel9,out=andYCIN9);
+        
+        Nand(a=outNX9,b=carry8,out=nasfx9);
+        Nand(a=nasfx9,b=nasfx9,out=andXCIN9);
+        
+        Nand(a=andXY9,b=andXY9,out=flawlessA9);
+        Nand(a=andYCIN9,b=andYCIN9,out=flawlessB9);
+        Nand(a=flawlessA9,b=flawlessB9,out=intercarry9);
+        
+        Nand(a=intercarry9,b=intercarry9,out=wormA9);
+        Nand(a=andXCIN9,b=andXCIN9,out=wormB9);
+        Nand(a=wormA9,b=wormB9,out=carry9);
+
+		//SUM: BIT_10
+        Nand(a=outNX10,b=outNY10,out=scranton10);
+        Nand(a=outNX10,b=scranton10,out=orNXYA10);
+        Nand(a=outNY10,b=scranton10,out=orNXYB10);
+        Nand(a=orNXYA10,b=orNXYB10,out=xorXY10);
+        
+        Nand(a=xorXY10,b=carry9,out=sylvan10);
+        Nand(a=xorXY10,b=sylvan10,out=orXXYA10);
+        Nand(a=carry9,b=sylvan10,out=orXXYB10);
+        Nand(a=orXXYA10,b=orXXYB10,out=FULLMUX10);
+ 
+        //CARRY: BIT_10
+        Nand(a=outNY10,b=carry9,out=yokel10);
+        Nand(a=yokel10,b=yokel10,out=andYCIN10);
+        
+        Nand(a=outNX10,b=carry9,out=nasfx10);
+        Nand(a=nasfx10,b=nasfx10,out=andXCIN10);
+        
+        Nand(a=andXY10,b=andXY10,out=flawlessA10);
+        Nand(a=andYCIN10,b=andYCIN10,out=flawlessB10);
+        Nand(a=flawlessA10,b=flawlessB10,out=intercarry10);
+        
+        Nand(a=intercarry10,b=intercarry10,out=wormA10);
+        Nand(a=andXCIN10,b=andXCIN10,out=wormB10);
+        Nand(a=wormA10,b=wormB10,out=carry10);
+
+		//SUM: BIT_11
+        Nand(a=outNX11,b=outNY11,out=scranton11);
+        Nand(a=outNX11,b=scranton11,out=orNXYA11);
+        Nand(a=outNY11,b=scranton11,out=orNXYB11);
+        Nand(a=orNXYA11,b=orNXYB11,out=xorXY11);
+        
+        Nand(a=xorXY11,b=carry10,out=sylvan11);
+        Nand(a=xorXY11,b=sylvan11,out=orXXYA11);
+        Nand(a=carry10,b=sylvan11,out=orXXYB11);
+        Nand(a=orXXYA11,b=orXXYB11,out=FULLMUX11);
+
+        //CARRY: BIT_11
+        Nand(a=outNY11,b=carry10,out=yokel11);
+        Nand(a=yokel11,b=yokel11,out=andYCIN11);
+        
+        Nand(a=outNX11,b=carry10,out=nasfx11);
+        Nand(a=nasfx11,b=nasfx11,out=andXCIN11);
+        
+        Nand(a=andXY11,b=andXY11,out=flawlessA11);
+        Nand(a=andYCIN11,b=andYCIN11,out=flawlessB11);
+        Nand(a=flawlessA11,b=flawlessB11,out=intercarry11);
+        
+        Nand(a=intercarry11,b=intercarry11,out=wormA11);
+        Nand(a=andXCIN11,b=andXCIN11,out=wormB11);
+        Nand(a=wormA11,b=wormB11,out=carry11);
+
+		//SUM: BIT_12
+        Nand(a=outNX12,b=outNY12,out=scranton12);
+        Nand(a=outNX12,b=scranton12,out=orNXYA12);
+        Nand(a=outNY12,b=scranton12,out=orNXYB12);
+        Nand(a=orNXYA12,b=orNXYB12,out=xorXY12);
+        
+        Nand(a=xorXY12,b=carry11,out=sylvan12);
+        Nand(a=xorXY12,b=sylvan12,out=orXXYA12);
+        Nand(a=carry11,b=sylvan12,out=orXXYB12);
+        Nand(a=orXXYA12,b=orXXYB12,out=FULLMUX12);
+        
+        //CARRY: BIT_12
+        Nand(a=outNY12,b=carry11,out=yokel12);
+        Nand(a=yokel12,b=yokel12,out=andYCIN12);
+        
+        Nand(a=outNX12,b=carry11,out=nasfx12);
+        Nand(a=nasfx12,b=nasfx12,out=andXCIN12);
+        
+        Nand(a=andXY12,b=andXY12,out=flawlessA12);
+        Nand(a=andYCIN12,b=andYCIN12,out=flawlessB12);
+        Nand(a=flawlessA12,b=flawlessB12,out=intercarry12);
+        
+        Nand(a=intercarry12,b=intercarry12,out=wormA12);
+        Nand(a=andXCIN12,b=andXCIN12,out=wormB12);
+        Nand(a=wormA12,b=wormB12,out=carry12);
+
+		//SUM: BIT_13
+        Nand(a=outNX13,b=outNY13,out=scranton13);
+        Nand(a=outNX13,b=scranton13,out=orNXYA13);
+        Nand(a=outNY13,b=scranton13,out=orNXYB13);
+        Nand(a=orNXYA13,b=orNXYB13,out=xorXY13);
+        
+        Nand(a=xorXY13,b=carry12,out=sylvan13);
+        Nand(a=xorXY13,b=sylvan13,out=orXXYA13);
+        Nand(a=carry12,b=sylvan13,out=orXXYB13);
+        Nand(a=orXXYA13,b=orXXYB13,out=FULLMUX13);
+
+        //CARRY: BIT_13
+        Nand(a=outNY13,b=carry12,out=yokel13);
+        Nand(a=yokel13,b=yokel13,out=andYCIN13);
+        
+        Nand(a=outNX13,b=carry12,out=nasfx13);
+        Nand(a=nasfx13,b=nasfx13,out=andXCIN13);
+        
+        Nand(a=andXY13,b=andXY13,out=flawlessA13);
+        Nand(a=andYCIN13,b=andYCIN13,out=flawlessB13);
+        Nand(a=flawlessA13,b=flawlessB13,out=intercarry13);
+        
+        Nand(a=intercarry13,b=intercarry13,out=wormA13);
+        Nand(a=andXCIN13,b=andXCIN13,out=wormB13);
+        Nand(a=wormA13,b=wormB13,out=carry13);
+
+		//SUM: BIT_14
+        Nand(a=outNX14,b=outNY14,out=scranton14);
+        Nand(a=outNX14,b=scranton14,out=orNXYA14);
+        Nand(a=outNY14,b=scranton14,out=orNXYB14);
+        Nand(a=orNXYA14,b=orNXYB14,out=xorXY14);
+        
+        Nand(a=xorXY14,b=carry13,out=sylvan14);
+        Nand(a=xorXY14,b=sylvan14,out=orXXYA14);
+        Nand(a=carry13,b=sylvan14,out=orXXYB14);
+        Nand(a=orXXYA14,b=orXXYB14,out=FULLMUX14);
+  
+        //CARRY: BIT_14
+        Nand(a=outNY14,b=carry13,out=yokel14);
+        Nand(a=yokel14,b=yokel14,out=andYCIN14);
+        
+        Nand(a=outNX14,b=carry13,out=nasfx14);
+        Nand(a=nasfx14,b=nasfx14,out=andXCIN14);
+        
+        Nand(a=andXY14,b=andXY14,out=flawlessA14);
+        Nand(a=andYCIN14,b=andYCIN14,out=flawlessB14);
+        Nand(a=flawlessA14,b=flawlessB14,out=intercarry14);
+        
+        Nand(a=intercarry14,b=intercarry14,out=wormA14);
+        Nand(a=andXCIN14,b=andXCIN14,out=wormB14);
+        Nand(a=wormA14,b=wormB14,out=carry14);
+
+		//SUM: BIT_15
+        Nand(a=outNX15,b=outNY15,out=scranton15);
+        Nand(a=outNX15,b=scranton15,out=orNXYA15);
+        Nand(a=outNY15,b=scranton15,out=orNXYB15);
+        Nand(a=orNXYA15,b=orNXYB15,out=xorXY15);
+        
+        Nand(a=xorXY15,b=carry14,out=sylvan15);
+        Nand(a=xorXY15,b=sylvan15,out=orXXYA15);
+        Nand(a=carry14,b=sylvan15,out=orXXYB15);
+        Nand(a=orXXYA15,b=orXXYB15,out=FULLMUX15);
+        
+        // MULTIPLEX - F AS SELECTOR
+		//And16(a,notF)		<--- fandMUX0..15
+		//a -> andXY0..15
+		Nand(a=andXY0,b=notF,out=aggro0);
+		Nand(a=aggro0,b=aggro0,out=fandMUX0);
+		
+		Nand(a=andXY1,b=notF,out=aggro1);
+		Nand(a=aggro1,b=aggro1,out=fandMUX1);
+		
+		Nand(a=andXY2,b=notF,out=aggro2);
+		Nand(a=aggro2,b=aggro2,out=fandMUX2);
+				
+		Nand(a=andXY3,b=notF,out=aggro3);
+		Nand(a=aggro3,b=aggro3,out=fandMUX3);
+		
+		Nand(a=andXY4,b=notF,out=aggro4);
+		Nand(a=aggro4,b=aggro4,out=fandMUX4);
+		
+		Nand(a=andXY5,b=notF,out=aggro5);
+		Nand(a=aggro5,b=aggro5,out=fandMUX5);
+		
+		Nand(a=andXY6,b=notF,out=aggro6);
+		Nand(a=aggro6,b=aggro6,out=fandMUX6);
+		
+		Nand(a=andXY7,b=notF,out=aggro7);
+		Nand(a=aggro7,b=aggro7,out=fandMUX7);
+		
+		Nand(a=andXY8,b=notF,out=aggro8);
+		Nand(a=aggro8,b=aggro8,out=fandMUX8);
+		
+		Nand(a=andXY9,b=notF,out=aggro9);
+		Nand(a=aggro9,b=aggro9,out=fandMUX9);
+		
+		Nand(a=andXY10,b=notF,out=aggro10);
+		Nand(a=aggro10,b=aggro10,out=fandMUX10);
+		
+		Nand(a=andXY11,b=notF,out=aggro11);
+		Nand(a=aggro11,b=aggro11,out=fandMUX11);
+		
+		Nand(a=andXY12,b=notF,out=aggro12);
+		Nand(a=aggro12,b=aggro12,out=fandMUX12);
+		
+		Nand(a=andXY13,b=notF,out=aggro13);
+		Nand(a=aggro13,b=aggro13,out=fandMUX13);
+		
+		Nand(a=andXY14,b=notF,out=aggro14);
+		Nand(a=aggro14,b=aggro14,out=fandMUX14);
+		
+		Nand(a=andXY15,b=notF,out=aggro15);
+		Nand(a=aggro15,b=aggro15,out=fandMUX15);
+		
+		//And16(b,f)		<--- sandMUX0..15
+		//a -> FULLMUX0..15
+		Nand(a=FULLMUX0,b=f,out=masterhit0);
+		Nand(a=masterhit0,b=masterhit0,out=sandMUX0);
+		
+		Nand(a=FULLMUX1,b=f,out=masterhit1);
+		Nand(a=masterhit1,b=masterhit1,out=sandMUX1);
+		
+		Nand(a=FULLMUX2,b=f,out=masterhit2);
+		Nand(a=masterhit2,b=masterhit2,out=sandMUX2);
+		
+		Nand(a=FULLMUX3,b=f,out=masterhit3);
+		Nand(a=masterhit3,b=masterhit3,out=sandMUX3);
+		
+		Nand(a=FULLMUX4,b=f,out=masterhit4);
+		Nand(a=masterhit4,b=masterhit4,out=sandMUX4);
+		
+		Nand(a=FULLMUX5,b=f,out=masterhit5);
+		Nand(a=masterhit5,b=masterhit5,out=sandMUX5);
+		
+		Nand(a=FULLMUX6,b=f,out=masterhit6);
+		Nand(a=masterhit6,b=masterhit6,out=sandMUX6);
+		
+		Nand(a=FULLMUX7,b=f,out=masterhit7);
+		Nand(a=masterhit7,b=masterhit7,out=sandMUX7);
+		
+		Nand(a=FULLMUX8,b=f,out=masterhit8);
+		Nand(a=masterhit8,b=masterhit8,out=sandMUX8);
+		
+		Nand(a=FULLMUX9,b=f,out=masterhit9);
+		Nand(a=masterhit9,b=masterhit9,out=sandMUX9);
+		
+		Nand(a=FULLMUX10,b=f,out=masterhit10);
+		Nand(a=masterhit10,b=masterhit10,out=sandMUX10);
+		
+		Nand(a=FULLMUX11,b=f,out=masterhit11);
+		Nand(a=masterhit11,b=masterhit11,out=sandMUX11);
+		
+		Nand(a=FULLMUX12,b=f,out=masterhit12);
+		Nand(a=masterhit12,b=masterhit12,out=sandMUX12);
+		
+		Nand(a=FULLMUX13,b=f,out=masterhit13);
+		Nand(a=masterhit13,b=masterhit13,out=sandMUX13);
+		
+		Nand(a=FULLMUX14,b=f,out=masterhit14);
+		Nand(a=masterhit14,b=masterhit14,out=sandMUX14);
+		
+		Nand(a=FULLMUX15,b=f,out=masterhit15);
+		Nand(a=masterhit15,b=masterhit15,out=sandMUX15);
+		
+		//Or16(sandMUX0..15,fandMUX0..15) <-- outFINTERM0..15
+		Nand(a=fandMUX0,b=fandMUX0,out=unusualA0);
+		Nand(a=sandMUX0,b=sandMUX0,out=unusualB0);
+		Nand(a=unusualA0,b=unusualB0,out=outFINTERM0);
+		
+		Nand(a=fandMUX1,b=fandMUX1,out=unusualA1);
+		Nand(a=sandMUX1,b=sandMUX1,out=unusualB1);
+		Nand(a=unusualA1,b=unusualB1,out=outFINTERM1);
+		
+		Nand(a=fandMUX2,b=fandMUX2,out=unusualA2);
+		Nand(a=sandMUX2,b=sandMUX2,out=unusualB2);
+		Nand(a=unusualA2,b=unusualB2,out=outFINTERM2);
+		
+		Nand(a=fandMUX3,b=fandMUX3,out=unusualA3);
+		Nand(a=sandMUX3,b=sandMUX3,out=unusualB3);
+		Nand(a=unusualA3,b=unusualB3,out=outFINTERM3);
+		
+		Nand(a=fandMUX4,b=fandMUX4,out=unusualA4);
+		Nand(a=sandMUX4,b=sandMUX4,out=unusualB4);
+		Nand(a=unusualA4,b=unusualB4,out=outFINTERM4);
+		
+		Nand(a=fandMUX5,b=fandMUX5,out=unusualA5);
+		Nand(a=sandMUX5,b=sandMUX5,out=unusualB5);
+		Nand(a=unusualA5,b=unusualB5,out=outFINTERM5);
+		
+		Nand(a=fandMUX6,b=fandMUX6,out=unusualA6);
+		Nand(a=sandMUX6,b=sandMUX6,out=unusualB6);
+		Nand(a=unusualA6,b=unusualB6,out=outFINTERM6);
+		
+		Nand(a=fandMUX7,b=fandMUX7,out=unusualA7);
+		Nand(a=sandMUX7,b=sandMUX7,out=unusualB7);
+		Nand(a=unusualA7,b=unusualB7,out=outFINTERM7);
+		
+		Nand(a=fandMUX8,b=fandMUX8,out=unusualA8);
+		Nand(a=sandMUX8,b=sandMUX8,out=unusualB8);
+		Nand(a=unusualA8,b=unusualB8,out=outFINTERM8);
+		
+		Nand(a=fandMUX9,b=fandMUX9,out=unusualA9);
+		Nand(a=sandMUX9,b=sandMUX9,out=unusualB9);
+		Nand(a=unusualA9,b=unusualB9,out=outFINTERM9);
+		
+		Nand(a=fandMUX10,b=fandMUX10,out=unusualA10);
+		Nand(a=sandMUX10,b=sandMUX10,out=unusualB10);
+		Nand(a=unusualA10,b=unusualB10,out=outFINTERM10);
+		
+		Nand(a=fandMUX11,b=fandMUX11,out=unusualA11);
+		Nand(a=sandMUX11,b=sandMUX11,out=unusualB11);
+		Nand(a=unusualA11,b=unusualB11,out=outFINTERM11);
+		
+		Nand(a=fandMUX12,b=fandMUX12,out=unusualA12);
+		Nand(a=sandMUX12,b=sandMUX12,out=unusualB12);
+		Nand(a=unusualA12,b=unusualB12,out=outFINTERM12);
+		
+		Nand(a=fandMUX13,b=fandMUX13,out=unusualA13);
+		Nand(a=sandMUX13,b=sandMUX13,out=unusualB13);
+		Nand(a=unusualA13,b=unusualB13,out=outFINTERM13);
+		
+		Nand(a=fandMUX14,b=fandMUX14,out=unusualA14);
+		Nand(a=sandMUX14,b=sandMUX14,out=unusualB14);
+		Nand(a=unusualA14,b=unusualB14,out=outFINTERM14);
+		
+		Nand(a=fandMUX15,b=fandMUX15,out=unusualA15);
+		Nand(a=sandMUX15,b=sandMUX15,out=unusualB15);
+		Nand(a=unusualA15,b=unusualB15,out=outFINTERM15);
+        
+        //NO_BIT
+        
+        //if (no == 1) then out = !out
+    	// MUX Approach:
+		// OutFinal[i] = (~(no).in[i]) + (no . ~(in[i]))
+		// The conditional negation produces TT identical to XOR
+    	//XOR Approach:
+		//OutFinal[i] = in[i] XOR no
+        Nand(a=outFINTERM0,b=no,out=feline0);
+        Nand(a=outFINTERM0,b=feline0,out=orfelineA0);
+        Nand(a=no,b=feline0,out=orfelineB0);
+        Nand(a=orfelineA0,b=orfelineB0,out=outFINAL0);
+        
+        Nand(a=outFINTERM1,b=no,out=feline1);
+        Nand(a=outFINTERM1,b=feline1,out=orfelineA1);
+        Nand(a=no,b=feline1,out=orfelineB1);
+        Nand(a=orfelineA1,b=orfelineB1,out=outFINAL1);
+        
+        Nand(a=outFINTERM2,b=no,out=feline2);
+        Nand(a=outFINTERM2,b=feline2,out=orfelineA2);
+        Nand(a=no,b=feline2,out=orfelineB2);
+        Nand(a=orfelineA2,b=orfelineB2,out=outFINAL2);
+        
+        Nand(a=outFINTERM3,b=no,out=feline3);
+        Nand(a=outFINTERM3,b=feline3,out=orfelineA3);
+        Nand(a=no,b=feline3,out=orfelineB3);
+        Nand(a=orfelineA3,b=orfelineB3,out=outFINAL3);
+        
+        Nand(a=outFINTERM4,b=no,out=feline4);
+        Nand(a=outFINTERM4,b=feline4,out=orfelineA4);
+        Nand(a=no,b=feline4,out=orfelineB4);
+        Nand(a=orfelineA4,b=orfelineB4,out=outFINAL4);
+        
+        Nand(a=outFINTERM5,b=no,out=feline5);
+        Nand(a=outFINTERM5,b=feline5,out=orfelineA5);
+        Nand(a=no,b=feline5,out=orfelineB5);
+        Nand(a=orfelineA5,b=orfelineB5,out=outFINAL5);
+        
+        Nand(a=outFINTERM6,b=no,out=feline6);
+        Nand(a=outFINTERM6,b=feline6,out=orfelineA6);
+        Nand(a=no,b=feline6,out=orfelineB6);
+        Nand(a=orfelineA6,b=orfelineB6,out=outFINAL6);
+        
+        Nand(a=outFINTERM7,b=no,out=feline7);
+        Nand(a=outFINTERM7,b=feline7,out=orfelineA7);
+        Nand(a=no,b=feline7,out=orfelineB7);
+        Nand(a=orfelineA7,b=orfelineB7,out=outFINAL7);
+        
+        Nand(a=outFINTERM8,b=no,out=feline8);
+        Nand(a=outFINTERM8,b=feline8,out=orfelineA8);
+        Nand(a=no,b=feline8,out=orfelineB8);
+        Nand(a=orfelineA8,b=orfelineB8,out=outFINAL8);
+        
+        Nand(a=outFINTERM9,b=no,out=feline9);
+        Nand(a=outFINTERM9,b=feline9,out=orfelineA9);
+        Nand(a=no,b=feline9,out=orfelineB9);
+        Nand(a=orfelineA9,b=orfelineB9,out=outFINAL9);
+        
+        Nand(a=outFINTERM10,b=no,out=feline10);
+        Nand(a=outFINTERM10,b=feline10,out=orfelineA10);
+        Nand(a=no,b=feline10,out=orfelineB10);
+        Nand(a=orfelineA10,b=orfelineB10,out=outFINAL10);
+        
+        Nand(a=outFINTERM11,b=no,out=feline11);
+        Nand(a=outFINTERM11,b=feline11,out=orfelineA11);
+        Nand(a=no,b=feline11,out=orfelineB11);
+        Nand(a=orfelineA11,b=orfelineB11,out=outFINAL11);
+        
+        Nand(a=outFINTERM12,b=no,out=feline12);
+        Nand(a=outFINTERM12,b=feline12,out=orfelineA12);
+        Nand(a=no,b=feline12,out=orfelineB12);
+        Nand(a=orfelineA12,b=orfelineB12,out=outFINAL12);
+        
+        Nand(a=outFINTERM13,b=no,out=feline13);
+        Nand(a=outFINTERM13,b=feline13,out=orfelineA13);
+        Nand(a=no,b=feline13,out=orfelineB13);
+        Nand(a=orfelineA13,b=orfelineB13,out=outFINAL13);
+        
+        Nand(a=outFINTERM14,b=no,out=feline14);
+        Nand(a=outFINTERM14,b=feline14,out=orfelineA14);
+        Nand(a=no,b=feline14,out=orfelineB14);
+        Nand(a=orfelineA14,b=orfelineB14,out=outFINAL14);
+        
+        Nand(a=outFINTERM15,b=no,out=feline15);
+        Nand(a=outFINTERM15,b=feline15,out=orfelineA15);
+        Nand(a=no,b=feline15,out=orfelineB15);
+        Nand(a=orfelineA15,b=orfelineB15,out=outFINAL15);
+        
+//-------------------------------------------------------------------     
+   
+        //OUTPUT BITS
+        
+        // ZR_BIT
+        
+    	//zr -> Not(Or16Way(outFINAL[16]))
+		//zr -> Not(Or16Way(outFINAL[16]))
+		//General ORs
+		Nand(a=outFINAL0,b=outFINAL0,out=strength0);
+		Nand(a=outFINAL1,b=outFINAL1,out=strength1);
+		Nand(a=strength0,b=strength1,out=ORZR01);
+		
+		Nand(a=outFINAL2,b=outFINAL2,out=strength2);
+		Nand(a=outFINAL3,b=outFINAL3,out=strength3);
+		Nand(a=strength2,b=strength3,out=ORZR23);
+		
+		Nand(a=outFINAL4,b=outFINAL4,out=strength4);
+		Nand(a=outFINAL5,b=outFINAL5,out=strength5);
+		Nand(a=strength4,b=strength5,out=ORZR45);
+		
+		Nand(a=outFINAL6,b=outFINAL6,out=strength6);
+		Nand(a=outFINAL7,b=outFINAL7,out=strength7);
+		Nand(a=strength6,b=strength7,out=ORZR67);
+		
+		Nand(a=outFINAL8,b=outFINAL8,out=strength8);
+		Nand(a=outFINAL9,b=outFINAL9,out=strength9);
+		Nand(a=strength8,b=strength9,out=ORZR89);
+		
+		Nand(a=outFINAL10,b=outFINAL10,out=strength10);
+		Nand(a=outFINAL11,b=outFINAL11,out=strength11);
+		Nand(a=strength10,b=strength11,out=ORZR1011);
+		
+		Nand(a=outFINAL12,b=outFINAL12,out=strength12);
+		Nand(a=outFINAL13,b=outFINAL13,out=strength13);
+		Nand(a=strength12,b=strength13,out=ORZR1213);
+
+		Nand(a=outFINAL14,b=outFINAL14,out=strength14);
+		Nand(a=outFINAL15,b=outFINAL15,out=strength15);
+		Nand(a=strength14,b=strength15,out=ORZR1415);
+
+		//Intermediate ORs
+		Nand(a=ORZR01,b=ORZR01,out=work01);
+		Nand(a=ORZR23,b=ORZR23,out=work23);
+		Nand(a=work01,b=work23,out=INTERMOR0123);
+		
+		Nand(a=ORZR45,b=ORZR45,out=work45);
+		Nand(a=ORZR67,b=ORZR67,out=work67);
+		Nand(a=work45,b=work67,out=INTERMOR4567);
+		
+		Nand(a=ORZR89,b=ORZR89,out=work89);
+		Nand(a=ORZR1011,b=ORZR1011,out=work1011);
+		Nand(a=work89,b=work1011,out=INTERMOR891011);
+		
+		Nand(a=ORZR1213,b=ORZR1213,out=work1213);
+		Nand(a=ORZR1415,b=ORZR1415,out=work1415);
+		Nand(a=work1213,b=work1415,out=INTERMOR12131415);
+
+		//Tapering ORs
+		Nand(a=INTERMOR0123,b=INTERMOR0123,out=head0123);
+		Nand(a=INTERMOR4567,b=INTERMOR4567,out=head4567);
+		Nand(a=head0123,b=head4567,out=INTERINTER1);
+		
+		Nand(a=INTERMOR891011,b=INTERMOR891011,out=head891011);
+		Nand(a=INTERMOR12131415,b=INTERMOR12131415,out=head12131415);
+		Nand(a=head891011,b=head12131415,out=INTERINTER2);
+
+		//Final Or
+		Nand(a=INTERINTER1,b=INTERINTER1,out=notINTER1);
+		Nand(a=INTERINTER2,b=INTERINTER2,out=notINTER2);
+		Nand(a=notINTER1,b=notINTER2,out=ORZR);
+
+		//Negation
+		Nand(a=ORZR,b=ORZR,out=zr);
+		
+		// NG_BIT
+		
+		//if out[16] == 1, number is negative, so ng = 1
+		//if out[16] == 0, number is positive, so ng = 0
+		//As NG depends on the MSB (the signal bit), it
+		//simply receives the value of the MSB.
+		
+		Nand(a=outFINAL15,b=true,out=nandng);
+		Nand(a=nandng,b=nandng,out=ng);
+		
+//---------------------------------------------------------------------
+		//16_BIT OUTPUT(UNADULTERATED)
+        Nand(a=outFINAL0,b=true,out=nandfinal0);
+        Nand(a=nandfinal0,b=nandfinal0,out=out[0]);
+        
+        Nand(a=outFINAL1,b=true,out=nandfinal1);
+        Nand(a=nandfinal1,b=nandfinal1,out=out[1]);
+        	
+        Nand(a=outFINAL2,b=true,out=nandfinal2);
+        Nand(a=nandfinal2,b=nandfinal2,out=out[2]);
+        
+        Nand(a=outFINAL3,b=true,out=nandfinal3);
+        Nand(a=nandfinal3,b=nandfinal3,out=out[3]);
+        
+        Nand(a=outFINAL4,b=true,out=nandfinal4);
+        Nand(a=nandfinal4,b=nandfinal4,out=out[4]);
+        
+        Nand(a=outFINAL5,b=true,out=nandfinal5);
+        Nand(a=nandfinal5,b=nandfinal5,out=out[5]);
+        	
+        Nand(a=outFINAL6,b=true,out=nandfinal6);
+        Nand(a=nandfinal6,b=nandfinal6,out=out[6]);
+        		
+        Nand(a=outFINAL7,b=true,out=nandfinal7);
+        Nand(a=nandfinal7,b=nandfinal7,out=out[7]);
+        
+        Nand(a=outFINAL8,b=true,out=nandfinal8);
+        Nand(a=nandfinal8,b=nandfinal8,out=out[8]);
+        
+        Nand(a=outFINAL9,b=true,out=nandfinal9);
+        Nand(a=nandfinal9,b=nandfinal9,out=out[9]);
+        
+        Nand(a=outFINAL10,b=true,out=nandfinal10);
+        Nand(a=nandfinal10,b=nandfinal10,out=out[10]);
+        
+        Nand(a=outFINAL11,b=true,out=nandfinal11);
+        Nand(a=nandfinal11,b=nandfinal11,out=out[11]);
+        	
+        Nand(a=outFINAL12,b=true,out=nandfinal12);
+        Nand(a=nandfinal12,b=nandfinal12,out=out[12]);
+        		
+        Nand(a=outFINAL13,b=true,out=nandfinal13);
+        Nand(a=nandfinal13,b=nandfinal13,out=out[13]);
+        
+        Nand(a=outFINAL14,b=true,out=nandfinal14);
+        Nand(a=nandfinal14,b=nandfinal14,out=out[14]);
+        
+        Nand(a=outFINAL15,b=true,out=nandfinal15);
+        Nand(a=nandfinal15,b=nandfinal15,out=out[15]);
+        
+}
+
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
